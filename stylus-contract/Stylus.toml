@@ -1,2 +1,3 @@
+[workspace]
+
 [networks]
-arbitrum-sepolia = "https://sepolia-rollup.arbitrum.io/rpc"
