@@ -49,8 +49,8 @@ export default function Producer() {
         alert("Hubo un problema registrando el lote.");
       }
     } catch (error) {
-      console.error(error);
-      alert("Error al firmar en Arbitrum.");
+      console.error("Error completo:", error);
+      alert("Error al firmar en Arbitrum: " + (error?.reason || error?.message || JSON.stringify(error)));
     } finally {
       setIsRegistering(false);
     }
