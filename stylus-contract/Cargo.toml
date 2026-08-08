@@ -4,13 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-alloy-primitives = "=0.7.6"
-alloy-sol-types = "=0.7.6"
+alloy-primitives = "0.8"
+alloy-sol-types = "0.8"
 mini-alloc = "0.6.1"
-stylus-sdk = "0.6.1"
-ruint = "=1.17.0"
-zeroize = "=1.7.0"
-zeroize_derive = "=1.4.2"
+stylus-sdk = "0.10.8"
 
 [features]
 export-abi = ["stylus-sdk/export-abi"]

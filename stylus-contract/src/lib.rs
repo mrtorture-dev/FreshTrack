@@ -2,7 +2,7 @@
 extern crate alloc;
 
 use stylus_sdk::{
-    alloy_primitives::{Address, U256},
+    alloy_primitives::U256,
     prelude::*,
     msg,
     block,
