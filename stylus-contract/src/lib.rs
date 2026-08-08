@@ -4,6 +4,8 @@
 #[macro_use]
 extern crate alloc;
 
+use alloc::vec::Vec;
+
 use stylus_sdk::{alloy_primitives::U256, prelude::*};
 
 // FreshTrack Trace Contract - Arbitrum Stylus
