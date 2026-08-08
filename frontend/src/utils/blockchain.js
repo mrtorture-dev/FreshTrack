@@ -22,18 +22,34 @@ export const getContract = () => {
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
-// Convierte un string a un número uint256 usando keccak256
-const stringToHash = (str) => {
-  const bytes = ethers.toUtf8Bytes(str);
-  const hash = ethers.keccak256(bytes);
-  return BigInt(hash);
+// Convierte un string de hasta 31 caracteres a uint256 (rellenando con ceros) de forma reversible
+const stringToBytes32Int = (str) => {
+  // Limitar a 31 caracteres para asegurar que no se pase de 32 bytes
+  const slicedStr = str.slice(0, 31);
+  const bytes = ethers.toUtf8Bytes(slicedStr);
+  const paddedBytes = ethers.zeroPadValue(bytes, 32);
+  return BigInt(paddedBytes);
+};
+
+// Convierte un entero uint256 de vuelta a un string UTF-8
+const bytes32IntToString = (valueBigInt) => {
+  try {
+    let hex = valueBigInt.toString(16);
+    // Rellenar hasta 64 caracteres hex (32 bytes)
+    hex = "0x" + hex.padStart(64, '0');
+    const bytes = ethers.getBytes(hex);
+    // Decodificar y quitar bytes nulos
+    return ethers.toUtf8String(bytes).replace(/\0/g, '');
+  } catch (e) {
+    return "Lote Desconocido";
+  }
 };
 
 export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
   const contract = getContract();
 
-  // Convertir datos al formato del contrato Stylus (uint256)
-  const productHash = stringToHash(`${productType}|${origin}|${creatorName}`);
+  // Guardamos directamente el productType como entero reversible (hasta 31 letras)
+  const productHash = stringToBytes32Int(productType);
   // expiresIn son días, lo convertimos a timestamp unix futuro
   const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expiresIn * 86400);
   // quantity en gramos (multiplicamos kg por 1000)
@@ -52,8 +68,6 @@ export const fetchAllBatches = async () => {
   const countRaw = await contract.getBatchCount();
   const count = Number(countRaw);
 
-  // Metadatos locales por productHash para reconstruir los datos de UI
-  // (los strings se guardan en el frontend, el hash en la blockchain)
   let batches = [];
   for (let i = 1; i <= count; i++) {
     const id = BigInt(i);
@@ -67,20 +81,24 @@ export const fetchAllBatches = async () => {
     const now = Math.floor(Date.now() / 1000);
     const expTs = Number(expirationTimestamp);
     const daysLeft = Math.max(0, Math.round((expTs - now) / 86400));
+    
+    // Decodificamos el nombre original del producto guardado en la blockchain
+    const originalProductName = bytes32IntToString(productHash);
 
     batches.push({
       id: i,
-      productType: `Lote #${i} (Hash: 0x${productHash.toString(16).slice(0, 8)}...)`,
-      type: `Lote #${i}`,
+      productType: originalProductName,
+      type: originalProductName,
       quantity: Math.round(Number(weightGrams) / 1000),
-      origin: "Registrado en Stylus",
+      origin: "Arbitrum Stylus (WASM)",
       status: daysLeft > 7 ? "Registrado" : daysLeft > 0 ? "En Tránsito" : "Entregado",
       expiresRaw: expTs,
       daysLeft,
       txHash: null,
-      creatorName: "FreshTrack Stylus",
+      creatorName: "Productor FreshTrack",
       imageUrl: ""
     });
   }
   return batches;
 };
+
