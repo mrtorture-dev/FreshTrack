@@ -14,3 +14,7 @@ export-abi = ["stylus-sdk/export-abi"]
 
 [lib]
 crate-type = ["lib", "cdylib"]
+
+[[bin]]
+name = "freshtrack-stylus"
+path = "src/main.rs"
