@@ -161,7 +161,7 @@ export default function Dashboard() {
                       <Link to={`/trace/${batch.id}`} style={{ color: 'var(--text-main)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                         <ShieldCheck size={14} color="var(--primary-color)"/> Trazabilidad
                       </Link>
-                      <a href={batch.txHash ? `https://sepolia.arbiscan.io/tx/${batch.txHash}` : `https://sepolia.arbiscan.io/address/0xb278d88fAE2c640634d3bcb30edB08bA0afdAc04`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                      <a href={batch.txHash ? `https://sepolia.arbiscan.io/tx/${batch.txHash}` : `https://sepolia.arbiscan.io/address/0x62fcee2dac606e1b7739d9c864c67472a3a38f27`} target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                         <ExternalLink size={14} /> Arbiscan (Tx)
                       </a>
                     </div>

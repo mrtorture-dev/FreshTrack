@@ -97,7 +97,7 @@ export default function Trace() {
               <strong style={{ fontSize: '0.9rem' }}>Verificado criptográficamente en Arbitrum</strong>
             </div>
             
-            <a href={batch.txHash ? `https://sepolia.arbiscan.io/tx/${batch.txHash}` : `https://sepolia.arbiscan.io/address/0xb278d88fAE2c640634d3bcb30edB08bA0afdAc04`} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem' }}>
+            <a href={batch.txHash ? `https://sepolia.arbiscan.io/tx/${batch.txHash}` : `https://sepolia.arbiscan.io/address/0x62fcee2dac606e1b7739d9c864c67472a3a38f27`} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem' }}>
               <ExternalLink size={14} /> Ver Transacción de Origen en Arbiscan
             </a>
           </div>
