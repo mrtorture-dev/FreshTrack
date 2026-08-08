@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAllBatches } from '../utils/blockchain';
+import { analyzeInventoryWithAI } from '../utils/ai';
 
 export default function Dashboard() {
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [aiRecommendations, setAiRecommendations] = useState({});
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,6 +43,14 @@ export default function Dashboard() {
     
     loadData();
   }, []);
+
+  const handleAnalyze = async () => {
+    setIsAnalyzing(true);
+    const key = import.meta.env.VITE_CEREBRAS_API_KEY;
+    const recommendations = await analyzeInventoryWithAI(batches, key);
+    setAiRecommendations(recommendations);
+    setIsAnalyzing(false);
+  };
 
   return (
     <div>
@@ -81,7 +92,17 @@ export default function Dashboard() {
       </div>
 
       <div className="glass-panel" style={{ marginTop: '2rem' }}>
-        <h2>Inventario Inteligente (Ordenado por FEFO)</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <h2 style={{ margin: 0 }}>Inventario Inteligente (Ordenado por FEFO)</h2>
+          <button 
+            onClick={handleAnalyze} 
+            disabled={isAnalyzing || batches.length === 0}
+            className="btn-primary" 
+            style={{ width: 'auto', background: isAnalyzing ? 'var(--text-muted)' : 'var(--primary-color)', display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+          >
+            <Cpu size={18} /> {isAnalyzing ? 'Cerebras AI procesando...' : 'Analizar con Cerebras AI'}
+          </button>
+        </div>
         <div style={{ overflowX: 'auto', paddingBottom: '0.5rem' }}>
           <table className="fefo-table">
             <thead>
@@ -98,9 +119,9 @@ export default function Dashboard() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan="6" style={{textAlign: 'center'}}>Sincronizando con Arbitrum Sepolia...</td></tr>
+              <tr><td colSpan="8" style={{textAlign: 'center'}}>Sincronizando con Arbitrum Sepolia...</td></tr>
             ) : batches.length === 0 ? (
-              <tr><td colSpan="6" style={{textAlign: 'center'}}>No hay lotes registrados aún.</td></tr>
+              <tr><td colSpan="8" style={{textAlign: 'center'}}>No hay lotes registrados aún.</td></tr>
             ) : (
               batches.map(batch => (
                 <tr key={batch.id}>
@@ -124,9 +145,17 @@ export default function Dashboard() {
                     </span>
                   </td>
                   <td>
-                    {batch.condition === 'danger' && <span style={{color: 'var(--danger-color)', fontWeight: 600}}>¡Priorizar Venta!</span>}
-                    {batch.condition === 'warning' && <span style={{color: 'var(--warning-color)', fontWeight: 600}}>Mover a góndola</span>}
-                    {batch.condition === 'success' && <span style={{color: 'var(--primary-color)', fontWeight: 600}}>Almacenar</span>}
+                    {aiRecommendations[batch.id] ? (
+                      <span style={{ color: '#a855f7', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <Cpu size={14}/> {aiRecommendations[batch.id]}
+                      </span>
+                    ) : (
+                      <>
+                        {batch.condition === 'danger' && <span style={{color: 'var(--danger-color)', fontWeight: 600}}>Venta rápida (oferta)</span>}
+                        {batch.condition === 'warning' && <span style={{color: 'var(--warning-color)', fontWeight: 600}}>Mover a góndola</span>}
+                        {batch.condition === 'success' && <span style={{color: 'var(--primary-color)', fontWeight: 600}}>Almacenar</span>}
+                      </>
+                    )}
                   </td>
                   <td>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
