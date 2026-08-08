@@ -1,0 +1,15 @@
+[package]
+name = "freshtrack-stylus"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+stylus-sdk = "0.6.0"
+alloy-primitives = "=0.8.0"
+alloy-sol-types = "=0.8.0"
+
+[features]
+export-abi = ["stylus-sdk/export-abi"]
+
+[lib]
+crate-type = ["lib", "cdylib"]
