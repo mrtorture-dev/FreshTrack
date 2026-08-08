@@ -40,18 +40,11 @@ export const registerBatchOnChain = async (productType, quantity, expiresIn, ori
   const weightGrams = BigInt(quantity * 1000);
 
   const tx = await contract.registerBatch(productHash, expirationDate, weightGrams);
-  const receipt = await tx.wait();
+  await tx.wait();
 
-  // Extraer el ID del batch desde los logs de retorno
-  if (receipt && receipt.logs && receipt.logs.length > 0) {
-    try {
-      const count = await contract.getBatchCount();
-      return count.toString();
-    } catch (e) {
-      return "1";
-    }
-  }
-  return null;
+  // El contrato Stylus no emite eventos, leemos el contador directamente
+  const count = await contract.getBatchCount();
+  return count.toString();
 };
 
 export const fetchAllBatches = async () => {
