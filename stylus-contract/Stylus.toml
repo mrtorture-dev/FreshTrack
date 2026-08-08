@@ -1,6 +1,2 @@
-[workspace]
-members = ["."]
-default-member = "."
-
-[networks.arbitrum-sepolia]
-endpoint = "https://sepolia-rollup.arbitrum.io/rpc"
+[networks]
+arbitrum-sepolia = "https://sepolia-rollup.arbitrum.io/rpc"
