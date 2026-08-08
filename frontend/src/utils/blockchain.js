@@ -5,12 +5,12 @@ const CONTRACT_ADDRESS = "0x62fcee2dac606e1b7739d9c864c67472a3a38f27"; // Arbitr
 // ABI del contrato Stylus (Rust/WASM) desplegado en Arbitrum Sepolia
 // Funciones adaptadas: strings → hashes uint256 para compatibilidad con WASM
 const ABI = [
-  "function register_batch(uint256 product_hash, uint256 expiration_date, uint256 weight_grams) external returns (uint256)",
-  "function get_batch_count() external view returns (uint256)",
-  "function get_expiration(uint256 batch_id) external view returns (uint256)",
-  "function get_product_hash(uint256 batch_id) external view returns (uint256)",
-  "function get_weight(uint256 batch_id) external view returns (uint256)",
-  "function is_registered(uint256 batch_id) external view returns (uint256)"
+  "function registerBatch(uint256 productHash, uint256 expirationDate, uint256 weightGrams) external returns (uint256)",
+  "function getBatchCount() external view returns (uint256)",
+  "function getExpiration(uint256 batchId) external view returns (uint256)",
+  "function getProductHash(uint256 batchId) external view returns (uint256)",
+  "function getWeight(uint256 batchId) external view returns (uint256)",
+  "function isRegistered(uint256 batchId) external view returns (uint256)"
 ];
 
 const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
@@ -39,14 +39,13 @@ export const registerBatchOnChain = async (productType, quantity, expiresIn, ori
   // quantity en gramos (multiplicamos kg por 1000)
   const weightGrams = BigInt(quantity * 1000);
 
-  const tx = await contract.register_batch(productHash, expirationDate, weightGrams);
+  const tx = await contract.registerBatch(productHash, expirationDate, weightGrams);
   const receipt = await tx.wait();
 
   // Extraer el ID del batch desde los logs de retorno
   if (receipt && receipt.logs && receipt.logs.length > 0) {
-    // El ID retornado es el batch_count en el momento del registro
     try {
-      const count = await contract.get_batch_count();
+      const count = await contract.getBatchCount();
       return count.toString();
     } catch (e) {
       return "1";
@@ -57,7 +56,7 @@ export const registerBatchOnChain = async (productType, quantity, expiresIn, ori
 
 export const fetchAllBatches = async () => {
   const contract = getContract();
-  const countRaw = await contract.get_batch_count();
+  const countRaw = await contract.getBatchCount();
   const count = Number(countRaw);
 
   // Metadatos locales por productHash para reconstruir los datos de UI
@@ -65,12 +64,12 @@ export const fetchAllBatches = async () => {
   let batches = [];
   for (let i = 1; i <= count; i++) {
     const id = BigInt(i);
-    const isReg = await contract.is_registered(id);
+    const isReg = await contract.isRegistered(id);
     if (Number(isReg) === 0) continue;
 
-    const expirationTimestamp = await contract.get_expiration(id);
-    const weightGrams = await contract.get_weight(id);
-    const productHash = await contract.get_product_hash(id);
+    const expirationTimestamp = await contract.getExpiration(id);
+    const weightGrams = await contract.getWeight(id);
+    const productHash = await contract.getProductHash(id);
 
     const now = Math.floor(Date.now() / 1000);
     const expTs = Number(expirationTimestamp);
