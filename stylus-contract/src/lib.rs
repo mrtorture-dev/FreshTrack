@@ -1,27 +1,11 @@
-#![cfg_attr(not(feature = "export-abi"), no_main)]
+#![cfg_attr(not(any(test, feature = "export-abi")), no_main)]
+#![cfg_attr(not(any(test, feature = "export-abi")), no_std)]
+
+#[macro_use]
 extern crate alloc;
 
-use stylus_sdk::{
-    alloy_primitives::U256,
-    prelude::*,
-    msg,
-    block,
-    evm,
-};
 use alloc::string::String;
-
-stylus_sdk::alloy_sol_types::sol! {
-    event BatchRegistered(
-        uint256 indexed batchId,
-        string productType,
-        string origin,
-        uint256 expirationDate,
-        string creatorName,
-        string imageUrl,
-        address producer,
-        uint256 timestamp
-    );
-}
+use stylus_sdk::{alloy_primitives::U256, prelude::*};
 
 sol_storage! {
     #[entrypoint]
@@ -37,7 +21,6 @@ sol_storage! {
         uint256 expiration_date;
         string creator_name;
         string image_url;
-        address producer;
         uint256 timestamp;
     }
 }
@@ -51,9 +34,9 @@ impl FreshTrackTrace {
         expiration_date: U256,
         creator_name: String,
         image_url: String,
-    ) {
+    ) -> U256 {
         let mut count = self.batch_count.get();
-        count += U256::from(1);
+        count += U256::from(1u8);
         self.batch_count.set(count);
 
         let mut new_batch = self.batches.setter(count);
@@ -63,22 +46,24 @@ impl FreshTrackTrace {
         new_batch.expiration_date.set(expiration_date);
         new_batch.creator_name.set_str(&creator_name);
         new_batch.image_url.set_str(&image_url);
-        new_batch.producer.set(msg::sender());
-        new_batch.timestamp.set(U256::from(block::timestamp()));
+        new_batch.timestamp.set(U256::from(0u8));
 
-        evm::log(BatchRegistered {
-            batchId: count,
-            productType: product_type,
-            origin,
-            expirationDate: expiration_date,
-            creatorName: creator_name,
-            imageUrl: image_url,
-            producer: msg::sender(),
-            timestamp: U256::from(block::timestamp()),
-        });
+        count
     }
 
     pub fn get_batch_count(&self) -> U256 {
         self.batch_count.get()
+    }
+
+    pub fn get_batch_product(&self, id: U256) -> String {
+        self.batches.get(id).product_type.get_string()
+    }
+
+    pub fn get_batch_origin(&self, id: U256) -> String {
+        self.batches.get(id).origin.get_string()
+    }
+
+    pub fn get_batch_expiration(&self, id: U256) -> U256 {
+        self.batches.get(id).expiration_date.get()
     }
 }
