@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-const CONTRACT_ADDRESS = "0xb278d88fAE2c640634d3bcb30edB08bA0afdAc04";
+const CONTRACT_ADDRESS = "0x62fcee2dac606e1b7739d9c864c67472a3a38f27"; // Arbitrum Stylus (Rust) - Deployed 2026-08-08
 
 const ABI = [
   "function registerBatch(string memory _productType, uint256 _quantity, uint256 _expirationDays, string memory _originLocation, string memory _creatorName, string memory _imageUrl) public returns (uint256)",
