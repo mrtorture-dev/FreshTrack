@@ -26,7 +26,7 @@ Responde ÚNICAMENTE con un JSON válido, sin texto adicional, donde las claves 
         'Authorization': `Bearer ${process.env.VITE_CEREBRAS_API_KEY}`
       },
       body: JSON.stringify({
-        model: "llama3.1-70b",
+        model: "gemma-4-31b",
         messages: [{ role: "user", content: promptText }],
         temperature: 0.2
       })
