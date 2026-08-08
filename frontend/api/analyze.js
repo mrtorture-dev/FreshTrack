@@ -15,7 +15,8 @@ Aquí están los productos y sus fechas de vencimiento:
 ${batches.map(b => `- ID: ${b.id}, Producto: ${b.productType}, Vence: ${new Date(Number(b.expirationDate) * 1000).toLocaleDateString()}`).join('\n')}
 
 Analiza si el producto es altamente perecible y la urgencia basada en el tiempo restante.
-Responde ÚNICAMENTE con un JSON válido, sin texto adicional, donde las claves sean los IDs numéricos y los valores sean una frase de acción ultra corta (máximo 3-4 palabras, ej: "Oferta urgente (Perecible)", "Almacén normal", "Donar inmediatamente", "Prioridad alta").
+PROHIBIDO responder con "Datos insuficientes" o similares. DEBES asumir y dar una recomendación definitiva para cada item.
+Responde ÚNICAMENTE con un JSON válido, sin texto adicional, donde las claves sean los IDs numéricos y los valores sean una frase de acción ultra corta (máximo 3-4 palabras, ej: "Oferta urgente (Perecible)", "Almacén normal", "Donar inmediatamente", "Prioridad alta", "Venta rápida").
   `;
 
   try {
