@@ -46,8 +46,7 @@ export default function Dashboard() {
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
-    const key = import.meta.env.VITE_CEREBRAS_API_KEY;
-    const recommendations = await analyzeInventoryWithAI(batches, key);
+    const recommendations = await analyzeInventoryWithAI(batches);
     setAiRecommendations(recommendations);
     setIsAnalyzing(false);
   };
