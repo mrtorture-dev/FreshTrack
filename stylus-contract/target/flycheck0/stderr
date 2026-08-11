@@ -1,0 +1,1284 @@
+    Blocking waiting for file lock on package cache
+    Updating crates.io index
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+  40.225197000s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack_stylus"}: cargo::core::compiler::fingerprint: dependency on `stylus_sdk` is newer than we are 13430933898.000000000s > 13430933897.940000000s "D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract"
+  40.229341500s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack_stylus"}: cargo::core::compiler::fingerprint: fingerprint dirty for freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("freshtrack_stylus", ["lib", "cdylib"], "D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract\\src\\lib.rs", Edition2021) }
+  40.229418700s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack_stylus"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleDependency { name: "stylus_sdk", dep_mtime: FileTime { seconds: 13430933898, nanos: 0 }, max_mtime: FileTime { seconds: 13430933897, nanos: 940000000 } })
+  40.236454700s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint: fingerprint error for freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)/Check { test: false }/TargetInner { name: "freshtrack-stylus", doc: true, ..: with_path("D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract\\src\\main.rs", Edition2021) }
+  40.236665200s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\freshtrack-stylus-89455ffdaeed85a8\bin-freshtrack-stylus`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_repo
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: <unknown>
+  15: <unknown>
+  16: git_midx_writer_dump
+  17: git_filter_source_repo
+  18: git_midx_writer_dump
+  19: BaseThreadInitThunk
+  20: RtlUserThreadStart
+  40.269947900s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint: fingerprint error for freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)/Check { test: true }/TargetInner { name: "freshtrack-stylus", doc: true, ..: with_path("D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract\\src\\main.rs", Edition2021) }
+  40.270017600s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\freshtrack-stylus-1caa381ddfba9193\test-bin-freshtrack-stylus`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_repo
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: <unknown>
+  15: <unknown>
+  16: git_midx_writer_dump
+  17: git_filter_source_repo
+  18: git_midx_writer_dump
+  19: BaseThreadInitThunk
+  20: RtlUserThreadStart
+    Checking freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)
+error: could not compile `freshtrack-stylus` (bin "freshtrack-stylus") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `freshtrack-stylus` (bin "freshtrack-stylus" test) due to 1 previous error
+rce=false package_id=bytes v1.12.1 target="bytes"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\bytes-23283a579fd9a8fb\lib-bytes`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.252288600s  INFO prepare_target{force=false package_id=cfg-if v1.0.4 target="cfg_if"}: cargo::core::compiler::fingerprint: fingerprint error for cfg-if v1.0.4/Check { test: false }/TargetInner { ..: lib_target("cfg_if", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\cfg-if-1.0.4\\src\\lib.rs", Edition2018) }
+   3.252370100s  INFO prepare_target{force=false package_id=cfg-if v1.0.4 target="cfg_if"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\cfg-if-20bb53187b6715fb\lib-cfg_if`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.357411400s  INFO prepare_target{force=false package_id=const-hex v1.19.1 target="const_hex"}: cargo::core::compiler::fingerprint: fingerprint error for const-hex v1.19.1/Check { test: false }/TargetInner { ..: lib_target("const_hex", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\const-hex-1.19.1\\src\\lib.rs", Edition2021) }
+   3.357606800s  INFO prepare_target{force=false package_id=const-hex v1.19.1 target="const_hex"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\const-hex-b5b2a759dc166971\lib-const_hex`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.432794300s  INFO prepare_target{force=false package_id=cpufeatures v0.2.17 target="cpufeatures"}: cargo::core::compiler::fingerprint: fingerprint error for cpufeatures v0.2.17/Check { test: false }/TargetInner { ..: lib_target("cpufeatures", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\cpufeatures-0.2.17\\src\\lib.rs", Edition2018) }
+   3.433138200s  INFO prepare_target{force=false package_id=cpufeatures v0.2.17 target="cpufeatures"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\cpufeatures-3020ffd0b9e8c469\lib-cpufeatures`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: <unknown>
+  18: <unknown>
+  19: git_midx_writer_dump
+  20: git_filter_source_repo
+  21: git_midx_writer_dump
+  22: BaseThreadInitThunk
+  23: RtlUserThreadStart
+   3.509531000s  INFO prepare_target{force=false package_id=derive_more v1.0.0 target="derive_more"}: cargo::core::compiler::fingerprint: fingerprint error for derive_more v1.0.0/Check { test: false }/TargetInner { ..: lib_target("derive_more", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\derive_more-1.0.0\\src\\lib.rs", Edition2021) }
+   3.509739800s  INFO prepare_target{force=false package_id=derive_more v1.0.0 target="derive_more"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\derive_more-12ccc139c4a3565f\lib-derive_more`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.708000900s  INFO prepare_target{force=false package_id=foldhash v0.1.5 target="foldhash"}: cargo::core::compiler::fingerprint: fingerprint error for foldhash v0.1.5/Check { test: false }/TargetInner { benched: false, ..: lib_target("foldhash", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\foldhash-0.1.5\\src\\lib.rs", Edition2021) }
+   3.708120700s  INFO prepare_target{force=false package_id=foldhash v0.1.5 target="foldhash"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\foldhash-6d0cb9249fcd15b4\lib-foldhash`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.800682700s  INFO prepare_target{force=false package_id=hashbrown v0.15.5 target="hashbrown"}: cargo::core::compiler::fingerprint: fingerprint error for hashbrown v0.15.5/Check { test: false }/TargetInner { ..: lib_target("hashbrown", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\hashbrown-0.15.5\\src\\lib.rs", Edition2021) }
+   3.800776800s  INFO prepare_target{force=false package_id=hashbrown v0.15.5 target="hashbrown"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\hashbrown-ffb368a646e29d42\lib-hashbrown`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.867467200s  INFO prepare_target{force=false package_id=itoa v1.0.18 target="itoa"}: cargo::core::compiler::fingerprint: fingerprint error for itoa v1.0.18/Check { test: false }/TargetInner { ..: lib_target("itoa", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\itoa-1.0.18\\src\\lib.rs", Edition2021) }
+   3.867542700s  INFO prepare_target{force=false package_id=itoa v1.0.18 target="itoa"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\itoa-5d04009386a75a02\lib-itoa`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   3.942156100s  INFO prepare_target{force=false package_id=ruint v1.20.0 target="ruint"}: cargo::core::compiler::fingerprint: fingerprint error for ruint v1.20.0/Check { test: false }/TargetInner { benched: false, ..: lib_target("ruint", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\ruint-1.20.0\\src\\lib.rs", Edition2024) }
+   3.942999200s  INFO prepare_target{force=false package_id=ruint v1.20.0 target="ruint"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\ruint-70d2f4a92bca7ca4\lib-ruint`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   4.035445100s  INFO prepare_target{force=false package_id=tiny-keccak v2.0.2 target="tiny_keccak"}: cargo::core::compiler::fingerprint: fingerprint error for tiny-keccak v2.0.2/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("tiny_keccak", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\tiny-keccak-2.0.2\\src\\lib.rs", Edition2018) }
+   4.035681200s  INFO prepare_target{force=false package_id=tiny-keccak v2.0.2 target="tiny_keccak"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\tiny-keccak-b3ec5578446a7691\lib-tiny_keccak`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   4.120217200s  INFO prepare_target{force=false package_id=crunchy v0.2.4 target="crunchy"}: cargo::core::compiler::fingerprint: fingerprint error for crunchy v0.2.4/Check { test: false }/TargetInner { ..: lib_target("crunchy", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\crunchy-0.2.4\\src\\lib.rs", Edition2021) }
+   4.120437700s  INFO prepare_target{force=false package_id=crunchy v0.2.4 target="crunchy"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\crunchy-51c937df63635494\lib-crunchy`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: <unknown>
+  18: <unknown>
+  19: git_midx_writer_dump
+  20: git_filter_source_repo
+  21: git_midx_writer_dump
+  22: BaseThreadInitThunk
+  23: RtlUserThreadStart
+   4.249597700s  INFO prepare_target{force=false package_id=alloy-sol-types v0.8.20 target="alloy_sol_types"}: cargo::core::compiler::fingerprint: fingerprint error for alloy-sol-types v0.8.20/Check { test: false }/TargetInner { ..: lib_target("alloy_sol_types", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\alloy-sol-types-0.8.20\\src\\lib.rs", Edition2021) }
+   4.249844900s  INFO prepare_target{force=false package_id=alloy-sol-types v0.8.20 target="alloy_sol_types"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\alloy-sol-types-bae0c74b4efd3fa1\lib-alloy_sol_types`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: <unknown>
+  16: <unknown>
+  17: git_midx_writer_dump
+  18: git_filter_source_repo
+  19: git_midx_writer_dump
+  20: BaseThreadInitThunk
+  21: RtlUserThreadStart
+   4.823501000s  INFO prepare_target{force=false package_id=hex v0.4.3 target="hex"}: cargo::core::compiler::fingerprint: fingerprint error for hex v0.4.3/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("hex", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\hex-0.4.3\\src\\lib.rs", Edition2018) }
+   4.823705500s  INFO prepare_target{force=false package_id=hex v0.4.3 target="hex"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\hex-96f2384e50a26a44\lib-hex`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: <unknown>
+  16: <unknown>
+  17: git_midx_writer_dump
+  18: git_filter_source_repo
+  19: git_midx_writer_dump
+  20: BaseThreadInitThunk
+  21: RtlUserThreadStart
+   4.912507100s  INFO prepare_target{force=false package_id=stylus-sdk v0.9.2 target="stylus_sdk"}: cargo::core::compiler::fingerprint: fingerprint error for stylus-sdk v0.9.2/Check { test: false }/TargetInner { ..: lib_target("stylus_sdk", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\stylus-sdk-0.9.2\\src\\lib.rs", Edition2021) }
+   4.912728800s  INFO prepare_target{force=false package_id=stylus-sdk v0.9.2 target="stylus_sdk"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\stylus-sdk-01cc8783f3698dfe\lib-stylus_sdk`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: <unknown>
+  16: <unknown>
+  17: git_midx_writer_dump
+  18: git_filter_source_repo
+  19: git_midx_writer_dump
+  20: BaseThreadInitThunk
+  21: RtlUserThreadStart
+   4.995259400s  INFO prepare_target{force=false package_id=base64ct v1.7.3 target="base64ct"}: cargo::core::compiler::fingerprint: fingerprint error for base64ct v1.7.3/Check { test: false }/TargetInner { ..: lib_target("base64ct", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\base64ct-1.7.3\\src\\lib.rs", Edition2021) }
+   4.995357500s  INFO prepare_target{force=false package_id=base64ct v1.7.3 target="base64ct"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\base64ct-dd48eccd16182a0b\lib-base64ct`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   5.059548900s  INFO prepare_target{force=false package_id=clap v4.6.6 target="clap"}: cargo::core::compiler::fingerprint: fingerprint error for clap v4.6.6/Check { test: false }/TargetInner { benched: false, ..: lib_target("clap", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\clap-4.6.6\\src\\lib.rs", Edition2024) }
+   5.059721000s  INFO prepare_target{force=false package_id=clap v4.6.6 target="clap"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\clap-3b450b896e73d366\lib-clap`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   5.136808900s  INFO prepare_target{force=false package_id=clap_builder v4.6.6 target="clap_builder"}: cargo::core::compiler::fingerprint: fingerprint error for clap_builder v4.6.6/Check { test: false }/TargetInner { benched: false, ..: lib_target("clap_builder", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\clap_builder-4.6.6\\src\\lib.rs", Edition2024) }
+   5.136886400s  INFO prepare_target{force=false package_id=clap_builder v4.6.6 target="clap_builder"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\clap_builder-079970f5bf3757c3\lib-clap_builder`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: <unknown>
+  18: <unknown>
+  19: git_midx_writer_dump
+  20: git_filter_source_repo
+  21: git_midx_writer_dump
+  22: BaseThreadInitThunk
+  23: RtlUserThreadStart
+   5.225894300s  INFO prepare_target{force=false package_id=anstream v1.0.0 target="anstream"}: cargo::core::compiler::fingerprint: fingerprint error for anstream v1.0.0/Check { test: false }/TargetInner { ..: lib_target("anstream", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\anstream-1.0.0\\src\\lib.rs", Edition2021) }
+   5.226103700s  INFO prepare_target{force=false package_id=anstream v1.0.0 target="anstream"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\anstream-84598a493b92bc2d\lib-anstream`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: <unknown>
+  19: <unknown>
+  20: git_midx_writer_dump
+  21: git_filter_source_repo
+  22: git_midx_writer_dump
+  23: BaseThreadInitThunk
+  24: RtlUserThreadStart
+   5.299600800s  INFO prepare_target{force=false package_id=anstyle v1.0.14 target="anstyle"}: cargo::core::compiler::fingerprint: fingerprint error for anstyle v1.0.14/Check { test: false }/TargetInner { ..: lib_target("anstyle", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\anstyle-1.0.14\\src\\lib.rs", Edition2021) }
+   5.299818100s  INFO prepare_target{force=false package_id=anstyle v1.0.14 target="anstyle"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\anstyle-1f0e215a28b90f54\lib-anstyle`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: <unknown>
+  20: <unknown>
+  21: git_midx_writer_dump
+  22: git_filter_source_repo
+  23: git_midx_writer_dump
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+   5.368039300s  INFO prepare_target{force=false package_id=anstyle-parse v1.0.0 target="anstyle_parse"}: cargo::core::compiler::fingerprint: fingerprint error for anstyle-parse v1.0.0/Check { test: false }/TargetInner { ..: lib_target("anstyle_parse", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\anstyle-parse-1.0.0\\src\\lib.rs", Edition2021) }
+   5.368260000s  INFO prepare_target{force=false package_id=anstyle-parse v1.0.0 target="anstyle_parse"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\anstyle-parse-bb6d0dd89184c41f\lib-anstyle_parse`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: <unknown>
+  20: <unknown>
+  21: git_midx_writer_dump
+  22: git_filter_source_repo
+  23: git_midx_writer_dump
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+   5.432664000s  INFO prepare_target{force=false package_id=utf8parse v0.2.2 target="utf8parse"}: cargo::core::compiler::fingerprint: fingerprint error for utf8parse v0.2.2/Check { test: false }/TargetInner { ..: lib_target("utf8parse", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\utf8parse-0.2.2\\src\\lib.rs", Edition2018) }
+   5.432783100s  INFO prepare_target{force=false package_id=utf8parse v0.2.2 target="utf8parse"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\utf8parse-d31ecb3a095d9b98\lib-utf8parse`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_path
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: git_filter_source_repo
+  20: <unknown>
+  21: <unknown>
+  22: git_midx_writer_dump
+  23: git_filter_source_repo
+  24: git_midx_writer_dump
+  25: BaseThreadInitThunk
+  26: RtlUserThreadStart
+   5.475954600s  INFO prepare_target{force=false package_id=anstyle-query v1.1.5 target="anstyle_query"}: cargo::core::compiler::fingerprint: fingerprint error for anstyle-query v1.1.5/Check { test: false }/TargetInner { ..: lib_target("anstyle_query", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\anstyle-query-1.1.5\\src\\lib.rs", Edition2021) }
+   5.476045900s  INFO prepare_target{force=false package_id=anstyle-query v1.1.5 target="anstyle_query"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\anstyle-query-578411c5639fbf4c\lib-anstyle_query`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: <unknown>
+  20: <unknown>
+  21: git_midx_writer_dump
+  22: git_filter_source_repo
+  23: git_midx_writer_dump
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+   5.509650800s  INFO prepare_target{force=false package_id=windows-sys v0.61.2 target="windows_sys"}: cargo::core::compiler::fingerprint: fingerprint error for windows-sys v0.61.2/Check { test: false }/TargetInner { tested: false, doctest: false, ..: lib_target("windows_sys", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\windows-sys-0.61.2\\src\\lib.rs", Edition2021) }
+   5.509715300s  INFO prepare_target{force=false package_id=windows-sys v0.61.2 target="windows_sys"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\windows-sys-5305b9ad5286c4dc\lib-windows_sys`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_path
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: git_filter_source_repo
+  20: <unknown>
+  21: <unknown>
+  22: git_midx_writer_dump
+  23: git_filter_source_repo
+  24: git_midx_writer_dump
+  25: BaseThreadInitThunk
+  26: RtlUserThreadStart
+   5.537965400s  INFO prepare_target{force=false package_id=windows-link v0.2.1 target="windows_link"}: cargo::core::compiler::fingerprint: fingerprint error for windows-link v0.2.1/Check { test: false }/TargetInner { ..: lib_target("windows_link", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\windows-link-0.2.1\\src\\lib.rs", Edition2021) }
+   5.538022800s  INFO prepare_target{force=false package_id=windows-link v0.2.1 target="windows_link"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\windows-link-040773b0e32c7ac3\lib-windows_link`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_path
+  15: git_filter_source_path
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: git_filter_source_repo
+  20: git_filter_source_repo
+  21: <unknown>
+  22: <unknown>
+  23: git_midx_writer_dump
+  24: git_filter_source_repo
+  25: git_midx_writer_dump
+  26: BaseThreadInitThunk
+  27: RtlUserThreadStart
+   5.592494500s  INFO prepare_target{force=false package_id=anstyle-wincon v3.0.11 target="anstyle_wincon"}: cargo::core::compiler::fingerprint: fingerprint error for anstyle-wincon v3.0.11/Check { test: false }/TargetInner { ..: lib_target("anstyle_wincon", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\anstyle-wincon-3.0.11\\src\\lib.rs", Edition2021) }
+   5.592631400s  INFO prepare_target{force=false package_id=anstyle-wincon v3.0.11 target="anstyle_wincon"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\anstyle-wincon-844c0e13af34aff8\lib-anstyle_wincon`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: <unknown>
+  20: <unknown>
+  21: git_midx_writer_dump
+  22: git_filter_source_repo
+  23: git_midx_writer_dump
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+   5.658994400s  INFO prepare_target{force=false package_id=once_cell_polyfill v1.70.2 target="once_cell_polyfill"}: cargo::core::compiler::fingerprint: fingerprint error for once_cell_polyfill v1.70.2/Check { test: false }/TargetInner { ..: lib_target("once_cell_polyfill", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\once_cell_polyfill-1.70.2\\src\\lib.rs", Edition2021) }
+   5.659215600s  INFO prepare_target{force=false package_id=once_cell_polyfill v1.70.2 target="once_cell_polyfill"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\once_cell_polyfill-d159e8c26edf1da8\lib-once_cell_polyfill`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_path
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: git_filter_source_repo
+  20: <unknown>
+  21: <unknown>
+  22: git_midx_writer_dump
+  23: git_filter_source_repo
+  24: git_midx_writer_dump
+  25: BaseThreadInitThunk
+  26: RtlUserThreadStart
+   5.755344400s  INFO prepare_target{force=false package_id=colorchoice v1.0.5 target="colorchoice"}: cargo::core::compiler::fingerprint: fingerprint error for colorchoice v1.0.5/Check { test: false }/TargetInner { ..: lib_target("colorchoice", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\colorchoice-1.0.5\\src\\lib.rs", Edition2021) }
+   5.755570900s  INFO prepare_target{force=false package_id=colorchoice v1.0.5 target="colorchoice"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\colorchoice-6b41a4b760c314d1\lib-colorchoice`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: <unknown>
+  20: <unknown>
+  21: git_midx_writer_dump
+  22: git_filter_source_repo
+  23: git_midx_writer_dump
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+   5.836517000s  INFO prepare_target{force=false package_id=is_terminal_polyfill v1.70.2 target="is_terminal_polyfill"}: cargo::core::compiler::fingerprint: fingerprint error for is_terminal_polyfill v1.70.2/Check { test: false }/TargetInner { ..: lib_target("is_terminal_polyfill", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\is_terminal_polyfill-1.70.2\\src\\lib.rs", Edition2021) }
+   5.836601500s  INFO prepare_target{force=false package_id=is_terminal_polyfill v1.70.2 target="is_terminal_polyfill"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\is_terminal_polyfill-037baa1c0c5597cf\lib-is_terminal_polyfill`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_path
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: git_filter_source_repo
+  19: <unknown>
+  20: <unknown>
+  21: git_midx_writer_dump
+  22: git_filter_source_repo
+  23: git_midx_writer_dump
+  24: BaseThreadInitThunk
+  25: RtlUserThreadStart
+   5.867148700s  INFO prepare_target{force=false package_id=clap_lex v1.1.0 target="clap_lex"}: cargo::core::compiler::fingerprint: fingerprint error for clap_lex v1.1.0/Check { test: false }/TargetInner { benched: false, ..: lib_target("clap_lex", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\clap_lex-1.1.0\\src\\lib.rs", Edition2024) }
+   5.867215500s  INFO prepare_target{force=false package_id=clap_lex v1.1.0 target="clap_lex"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\clap_lex-ee4f4a18a2aa7edc\lib-clap_lex`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: <unknown>
+  19: <unknown>
+  20: git_midx_writer_dump
+  21: git_filter_source_repo
+  22: git_midx_writer_dump
+  23: BaseThreadInitThunk
+  24: RtlUserThreadStart
+   5.898407300s  INFO prepare_target{force=false package_id=strsim v0.11.1 target="strsim"}: cargo::core::compiler::fingerprint: fingerprint error for strsim v0.11.1/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("strsim", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\strsim-0.11.1\\src\\lib.rs", Edition2015) }
+   5.898478600s  INFO prepare_target{force=false package_id=strsim v0.11.1 target="strsim"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\strsim-013b2067aca31e95\lib-strsim`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_path
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: git_filter_source_repo
+  18: <unknown>
+  19: <unknown>
+  20: git_midx_writer_dump
+  21: git_filter_source_repo
+  22: git_midx_writer_dump
+  23: BaseThreadInitThunk
+  24: RtlUserThreadStart
+   6.121111600s  INFO prepare_target{force=false package_id=keccak-const v0.2.0 target="keccak_const"}: cargo::core::compiler::fingerprint: fingerprint error for keccak-const v0.2.0/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("keccak_const", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\keccak-const-0.2.0\\src\\lib.rs", Edition2021) }
+   6.121170600s  INFO prepare_target{force=false package_id=keccak-const v0.2.0 target="keccak_const"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\keccak-const-91054b5273ffdfbf\lib-keccak_const`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   6.195511000s  INFO prepare_target{force=false package_id=lazy_static v1.5.0 target="lazy_static"}: cargo::core::compiler::fingerprint: fingerprint error for lazy_static v1.5.0/Check { test: false }/TargetInner { name_inferred: true, ..: lib_target("lazy_static", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\lazy_static-1.5.0\\src\\lib.rs", Edition2015) }
+   6.195727000s  INFO prepare_target{force=false package_id=lazy_static v1.5.0 target="lazy_static"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\lazy_static-d4db786a07b3ea49\lib-lazy_static`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   6.255740300s  INFO prepare_target{force=false package_id=mini-alloc v0.9.2 target="mini_alloc"}: cargo::core::compiler::fingerprint: fingerprint error for mini-alloc v0.9.2/Check { test: false }/TargetInner { ..: lib_target("mini_alloc", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\mini-alloc-0.9.2\\src\\lib.rs", Edition2021) }
+   6.255873500s  INFO prepare_target{force=false package_id=mini-alloc v0.9.2 target="mini_alloc"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\mini-alloc-7ab26688ced2d850\lib-mini_alloc`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   6.336428400s  INFO prepare_target{force=false package_id=stylus-core v0.9.2 target="stylus_core"}: cargo::core::compiler::fingerprint: fingerprint error for stylus-core v0.9.2/Check { test: false }/TargetInner { ..: lib_target("stylus_core", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\stylus-core-0.9.2\\src\\lib.rs", Edition2021) }
+   6.336600800s  INFO prepare_target{force=false package_id=stylus-core v0.9.2 target="stylus_core"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\stylus-core-7f73429ad1d93955\lib-stylus_core`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: <unknown>
+  17: <unknown>
+  18: git_midx_writer_dump
+  19: git_filter_source_repo
+  20: git_midx_writer_dump
+  21: BaseThreadInitThunk
+  22: RtlUserThreadStart
+   6.393496100s  INFO prepare_target{force=false package_id=dyn-clone v1.0.20 target="dyn_clone"}: cargo::core::compiler::fingerprint: fingerprint error for dyn-clone v1.0.20/Check { test: false }/TargetInner { ..: lib_target("dyn_clone", ["lib"], "C:\\Users\\Usuario\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\dyn-clone-1.0.20\\src\\lib.rs", Edition2018) }
+   6.393574900s  INFO prepare_target{force=false package_id=dyn-clone v1.0.20 target="dyn_clone"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\dyn-clone-03cda98be49c2bae\lib-dyn_clone`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_path
+  10: git_filter_source_path
+  11: git_filter_source_path
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: git_filter_source_repo
+  15: git_filter_source_repo
+  16: git_filter_source_repo
+  17: <unknown>
+  18: <unknown>
+  19: git_midx_writer_dump
+  20: git_filter_source_repo
+  21: git_midx_writer_dump
+  22: BaseThreadInitThunk
+  23: RtlUserThreadStart
+   7.720889600s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack_stylus"}: cargo::core::compiler::fingerprint: fingerprint error for freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)/Check { test: true }/TargetInner { name_inferred: true, ..: lib_target("freshtrack_stylus", ["lib", "cdylib"], "D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract\\src\\lib.rs", Edition2021) }
+   7.721036200s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack_stylus"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\freshtrack-stylus-d110e6b0338dc7eb\test-lib-freshtrack_stylus`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_repo
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: <unknown>
+  15: <unknown>
+  16: git_midx_writer_dump
+  17: git_filter_source_repo
+  18: git_midx_writer_dump
+  19: BaseThreadInitThunk
+  20: RtlUserThreadStart
+   7.758910800s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint: fingerprint error for freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)/Check { test: false }/TargetInner { name: "freshtrack-stylus", doc: true, ..: with_path("D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract\\src\\main.rs", Edition2021) }
+   7.758988800s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\freshtrack-stylus-89455ffdaeed85a8\bin-freshtrack-stylus`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_repo
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: <unknown>
+  15: <unknown>
+  16: git_midx_writer_dump
+  17: git_filter_source_repo
+  18: git_midx_writer_dump
+  19: BaseThreadInitThunk
+  20: RtlUserThreadStart
+   7.788829700s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint: fingerprint error for freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)/Check { test: true }/TargetInner { name: "freshtrack-stylus", doc: true, ..: with_path("D:\\Proyectos Universitarios\\FreshTrack\\stylus-contract\\src\\main.rs", Edition2021) }
+   7.788889400s  INFO prepare_target{force=false package_id=freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract) target="freshtrack-stylus"}: cargo::core::compiler::fingerprint:     err: failed to read `D:\Proyectos Universitarios\FreshTrack\stylus-contract\target\debug\.fingerprint\freshtrack-stylus-1caa381ddfba9193\test-bin-freshtrack-stylus`
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_path
+   6: git_filter_source_path
+   7: git_filter_source_path
+   8: git_filter_source_path
+   9: git_filter_source_repo
+  10: git_filter_source_repo
+  11: git_filter_source_repo
+  12: git_filter_source_repo
+  13: git_filter_source_repo
+  14: <unknown>
+  15: <unknown>
+  16: git_midx_writer_dump
+  17: git_filter_source_repo
+  18: git_midx_writer_dump
+  19: BaseThreadInitThunk
+  20: RtlUserThreadStart
+    Checking windows-link v0.2.1
+    Checking cfg-if v1.0.4
+    Checking windows-sys v0.61.2
+    Checking crunchy v0.2.4
+    Checking cpufeatures v0.2.17
+    Checking utf8parse v0.2.2
+    Checking foldhash v0.1.5
+    Checking anstyle v1.0.14
+    Checking once_cell_polyfill v1.70.2
+    Checking hashbrown v0.15.5
+    Checking anstyle-parse v1.0.0
+    Checking anstyle-wincon v3.0.11
+    Checking anstyle-query v1.1.5
+    Checking tiny-keccak v2.0.2
+    Checking derive_more v1.0.0
+    Checking const-hex v1.19.1
+    Checking ruint v1.20.0
+    Checking itoa v1.0.18
+    Checking colorchoice v1.0.5
+    Checking is_terminal_polyfill v1.70.2
+    Checking bytes v1.12.1
+    Checking strsim v0.11.1
+    Checking clap_lex v1.1.0
+    Checking dyn-clone v1.0.20
+    Checking mini-alloc v0.9.2
+    Checking lazy_static v1.5.0
+    Checking keccak-const v0.2.0
+    Checking hex v0.4.3
+    Checking base64ct v1.7.3
+    Checking anstream v1.0.0
+    Checking clap_builder v4.6.6
+    Checking alloy-primitives v0.8.20
+    Checking alloy-sol-types v0.8.20
+    Checking clap v4.6.6
+    Checking stylus-core v0.9.2
+    Checking stylus-sdk v0.9.2
+    Checking freshtrack-stylus v0.1.0 (D:\Proyectos Universitarios\FreshTrack\stylus-contract)
+error: could not compile `freshtrack-stylus` (bin "freshtrack-stylus") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `freshtrack-stylus` (bin "freshtrack-stylus" test) due to 1 previous error
