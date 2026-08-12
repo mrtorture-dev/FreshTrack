@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom';
 import { LayoutDashboard, Truck, LogOut, Users } from 'lucide-react';
 import './App.css';
 import Dashboard from './pages/Dashboard';
 import Producer from './pages/Producer';
 import Trace from './pages/Trace';
 import Login from './pages/Login';
+import Landing from './pages/Landing';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import StoreUsers from './pages/StoreUsers';
 import Logo from './components/Logo';
@@ -14,7 +15,30 @@ function MainLayout() {
   const { user, logout } = useAuth();
   
   if (!user) {
-    return <Login />;
+    return (
+      <div className="app-container">
+        <header style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Logo size={24} />
+            <span style={{ fontWeight: 'bold' }}>FreshTrack</span>
+          </div>
+          <nav style={{ display: 'flex', gap: '1rem' }}>
+            <Link to="/" style={{ color: 'var(--text-color)', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
+            <Link to="/producer" style={{ color: 'var(--text-color)', textDecoration: 'none', fontWeight: 'bold' }}>Productor</Link>
+            <Link to="/dashboard" style={{ color: 'var(--text-color)', textDecoration: 'none', fontWeight: 'bold' }}>Supermercado</Link>
+          </nav>
+        </header>
+
+        <main className="container" style={{ padding: '2rem' }}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/dashboard" element={<Login />} />
+            <Route path="/producer" element={<Login />} />
+            <Route path="/trace/:id" element={<Trace />} />
+          </Routes>
+        </main>
+      </div>
+    );
   }
 
   return (

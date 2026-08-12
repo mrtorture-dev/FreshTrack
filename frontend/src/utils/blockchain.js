@@ -118,8 +118,11 @@ export const fetchAllBatches = async () => {
       const registered = await contract.isRegistered(id);
       if (!registered) continue;
 
-      // getBatch devuelve (productName, producer, expirationDate, weightGrams)
-      const [rawProductName, rawProducer, expirationTimestamp, weightGrams] = await contract.getBatch(id);
+      // Para evitar errores de decodificación ABI con tuplas mixtas en Stylus, leemos individualmente
+      const rawProductName = await contract.getProductName(id);
+      const rawProducer = await contract.getProducer(id);
+      const expirationTimestamp = await contract.getExpiration(id);
+      const weightGrams = await contract.getWeight(id);
 
       // Limpiar basura de memoria de WASM/Stylus (caracteres no imprimibles generados por corrupción de punteros en stylus-sdk 0.9)
       const productName = rawProductName.replace(/[^\x20-\x7E\xA0-\xFF]/g, '').trim();
