@@ -87,7 +87,7 @@ export default function Landing() {
           </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>Para el Supermercado</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            <strong>Reducción de Mermas (IA):</strong> Automatiza el inventario FEFO (First-Expired, First-Out). Cerebras AI (Gemma 4 31B) analiza la vida útil de cada lote en tránsito en tiempo real para recomendar acciones de venta rápida y evitar desperdicios.
+            <strong>Reducción de Mermas (IA):</strong> Automatiza el inventario FEFO. Cerebras AI (Gemma 4 31B) analiza en tiempo real la vida útil de cada lote y previene anomalías logísticas antes de que generen desperdicios.
           </p>
         </div>
 

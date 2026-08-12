@@ -10,14 +10,13 @@ const INITIAL_TEMPLATES = [
   { id: 2, name: 'Tomate Cherry Orgánico', image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Huaral, Perú', defaultExpires: 10 },
   { id: 3, name: 'Lechuga Seda', image: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Trujillo, Perú', defaultExpires: 7 },
   { id: 4, name: 'Mango Kent Exportación', image: 'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Piura, Perú', defaultExpires: 12 },
-  { id: 5, name: 'Arándanos Azules', image: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'La Libertad, Perú', defaultExpires: 21 },
-  { id: 6, name: 'Espárragos Verdes', image: 'https://images.unsplash.com/photo-1553232148-5c46e3952ba5?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Ica, Perú', defaultExpires: 18 }
+  { id: 5, name: 'Arándanos Azules', image: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'La Libertad, Perú', defaultExpires: 21 }
 ];
 
 export default function Producer() {
   const { user } = useAuth();
   const [templates, setTemplates] = useState(() => {
-    const saved = localStorage.getItem('freshtrack_templates_v5');
+    const saved = localStorage.getItem('freshtrack_templates_v6');
     return saved ? JSON.parse(saved) : INITIAL_TEMPLATES;
   });
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -138,7 +137,7 @@ export default function Producer() {
     };
     const updated = [...templates, newT];
     setTemplates(updated);
-    localStorage.setItem('freshtrack_templates_v5', JSON.stringify(updated));
+    localStorage.setItem('freshtrack_templates_v6', JSON.stringify(updated));
     setNewTemplate({ name: '', image: '', defaultOrigin: '', defaultExpires: '' });
     setIsAddingTemplate(false);
   };
@@ -147,7 +146,7 @@ export default function Producer() {
     e.stopPropagation();
     const updated = templates.filter(t => t.id !== id);
     setTemplates(updated);
-    localStorage.setItem('freshtrack_templates_v5', JSON.stringify(updated));
+    localStorage.setItem('freshtrack_templates_v6', JSON.stringify(updated));
     if (selectedTemplate === id) setSelectedTemplate(null);
   };
 

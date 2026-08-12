@@ -11,7 +11,7 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const success = login(username, password);
+    const success = login(username.trim(), password);
     if (!success) {
       setError('Credenciales incorrectas. Verifica tu usuario y contraseña.');
     }
