@@ -11,7 +11,8 @@ export const analyzeInventoryWithAI = async (batches) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Error en API interna: ${response.statusText}`);
+      const errText = await response.text();
+      throw new Error(`Error en API interna (Status ${response.status}): ${errText}`);
     }
 
     const data = await response.json();
