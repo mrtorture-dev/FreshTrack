@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { registerBatchOnChain } from '../utils/blockchain';
+import { registerBatchOnChain, mintNFTAndGetTokenId } from '../utils/blockchain';
 import { useAuth } from '../context/AuthContext';
 import { PlusCircle, Wallet, Key, Award, Copy } from 'lucide-react';
 import { animate, stagger } from 'animejs';
@@ -81,24 +81,35 @@ export default function Producer() {
     }
   };
 
-  const addNFTToMetaMask = async (tokenId) => {
+  const addNFTToMetaMask = async (milestoneId) => {
     if (!window.ethereum) {
       alert("Por favor instala la extensión de MetaMask primero.");
       return;
     }
     try {
+      // Determinar URI del NFT basado en milestoneId
+      const uris = {
+        1: "https://freshtrack-ecru.vercel.app/badges/pionero.jpg",
+        2: "https://freshtrack-ecru.vercel.app/badges/bronce.jpg",
+        3: "https://freshtrack-ecru.vercel.app/badges/maestro.jpg"
+      };
+      
+      alert("Acuñando (Minting) NFT en Arbitrum Sepolia... Por favor espera unos segundos.");
+      const tokenId = await mintNFTAndGetTokenId(user.address, milestoneId, uris[milestoneId]);
+      
       await window.ethereum.request({
         method: 'wallet_watchAsset',
         params: {
           type: 'ERC721',
           options: {
             address: '0x314AC13cb01eEb55205D967dF540Ba59769D0D52', // FreshTrackNFT
-            tokenId: tokenId.toString(),
+            tokenId: tokenId,
           },
         },
       });
     } catch (error) {
       console.error(error);
+      alert("Error exportando a MetaMask: " + error.message);
     }
   };
 

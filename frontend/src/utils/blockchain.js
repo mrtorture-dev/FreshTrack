@@ -40,6 +40,32 @@ export const getSignerContract = () => {
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
+const NFT_CONTRACT_ADDRESS = "0x314AC13cb01eEb55205D967dF540Ba59769D0D52";
+const NFT_ABI = [
+  "function safeMint(address to, uint256 milestoneId, string memory uri) public",
+  "function hasMilestone(address owner, uint256 milestoneId) external view returns (bool)",
+  "event MilestoneMinted(address indexed producer, uint256 milestoneId, uint256 tokenId)"
+];
+
+export const mintNFTAndGetTokenId = async (userAddress, milestoneId, uri) => {
+  const provider = new ethers.JsonRpcProvider(RPC_URL);
+  const signer = new ethers.Wallet(PRIVATE_KEY, provider);
+  const nftContract = new ethers.Contract(NFT_CONTRACT_ADDRESS, NFT_ABI, signer);
+  
+  const alreadyMinted = await nftContract.hasMilestone(userAddress, milestoneId);
+  if (!alreadyMinted) {
+    const tx = await nftContract.safeMint(userAddress, milestoneId, uri, { gasLimit: 500000 });
+    await tx.wait();
+  }
+  
+  const filter = nftContract.filters.MilestoneMinted(userAddress, milestoneId);
+  const events = await nftContract.queryFilter(filter);
+  if (events.length > 0) {
+    return events[0].args[2].toString(); // The tokenId is the 3rd argument
+  }
+  throw new Error("No se pudo encontrar el Token ID");
+};
+
 export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
   const contract = getSignerContract();
 
