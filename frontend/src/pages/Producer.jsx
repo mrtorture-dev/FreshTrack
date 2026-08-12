@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { registerBatchOnChain } from '../utils/blockchain';
 import { useAuth } from '../context/AuthContext';
 import { PlusCircle } from 'lucide-react';
-import anime from 'animejs/lib/anime.es.js';
+import { animate, stagger } from 'animejs';
 
 const INITIAL_TEMPLATES = [
   { id: 1, name: 'Paltas Hass Premium', image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Ica, Perú', defaultExpires: 14 },
@@ -33,12 +33,11 @@ export default function Producer() {
   const [generatedTxHash, setGeneratedTxHash] = useState(null);
 
   useEffect(() => {
-    anime({
-      targets: '.glass-panel',
+    animate('.glass-panel', {
       scale: [0.95, 1],
       opacity: [0, 1],
       duration: 800,
-      delay: anime.stagger(150),
+      delay: stagger(150),
       easing: 'easeOutElastic(1, .8)'
     });
   }, []);

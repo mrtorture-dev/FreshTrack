@@ -3,7 +3,7 @@ import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck, 
 import { Link } from 'react-router-dom';
 import { fetchAllBatches } from '../utils/blockchain';
 import { analyzeInventoryWithAI } from '../utils/ai';
-import anime from 'animejs/lib/anime.es.js';
+import { animate, stagger } from 'animejs';
 
 export default function Dashboard() {
   const [batches, setBatches] = useState([]);
@@ -47,20 +47,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!loading) {
-      anime({
-        targets: '.dashboard-grid .stat-card',
+      animate('.dashboard-grid .stat-card', {
         translateY: [30, 0],
         opacity: [0, 1],
         duration: 800,
-        delay: anime.stagger(100),
+        delay: stagger(100),
         easing: 'easeOutQuad'
       });
-      anime({
-        targets: '.tx-list .transaction-card',
+      animate('.tx-list .transaction-card', {
         translateX: [-20, 0],
         opacity: [0, 1],
         duration: 600,
-        delay: anime.stagger(50, { start: 400 }),
+        delay: stagger(50, { start: 400 }),
         easing: 'easeOutSine'
       });
     }

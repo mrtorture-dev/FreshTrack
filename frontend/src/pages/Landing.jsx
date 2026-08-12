@@ -1,28 +1,26 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, TrendingUp, Sprout, ArrowRight } from 'lucide-react';
-import anime from 'animejs/lib/anime.es.js';
+import { animate, stagger } from 'animejs';
 
 export default function Landing() {
   const headerRef = useRef(null);
   const cardsRef = useRef(null);
 
   useEffect(() => {
-    anime({
-      targets: headerRef.current.children,
+    animate(headerRef.current.children, {
       translateY: [50, 0],
       opacity: [0, 1],
       duration: 1200,
-      delay: anime.stagger(200),
+      delay: stagger(200),
       easing: 'easeOutExpo'
     });
 
-    anime({
-      targets: cardsRef.current.children,
+    animate(cardsRef.current.children, {
       translateY: [50, 0],
       opacity: [0, 1],
       duration: 1000,
-      delay: anime.stagger(150, { start: 600 }),
+      delay: stagger(150, { start: 600 }),
       easing: 'easeOutQuart'
     });
   }, []);
