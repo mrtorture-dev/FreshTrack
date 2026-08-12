@@ -29,6 +29,11 @@ export default function Producer() {
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [generatedBatchId, setGeneratedBatchId] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
+  
+  const [totalKg, setTotalKg] = useState(() => {
+    const saved = localStorage.getItem(`freshtrack_kg_${user.username}`);
+    return saved ? parseInt(saved) : 0;
+  });
 
   const [generatedTxHash, setGeneratedTxHash] = useState(null);
 
@@ -59,6 +64,12 @@ export default function Producer() {
       if (result?.batchId) {
         setGeneratedBatchId(result.batchId);
         setGeneratedTxHash(result.txHash);
+        
+        // Update total kilos for achievements
+        const addedKg = parseInt(formData.quantity) || 0;
+        const newTotal = totalKg + addedKg;
+        setTotalKg(newTotal);
+        localStorage.setItem(`freshtrack_kg_${user.username}`, newTotal);
       } else {
         alert("Hubo un problema registrando el lote.");
       }
@@ -130,21 +141,24 @@ export default function Producer() {
         </div>
 
         <div style={{ flex: '1 1 300px' }}>
-          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>
-            <Award size={20} color="#f59e0b"/> Tus Logros (NFTs)
-          </h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', margin: 0 }}>
+              <Award size={20} color="#f59e0b"/> Tus Logros (NFTs)
+            </h3>
+            <span style={{ fontSize: '0.8rem', color: 'var(--primary-color)', fontWeight: 'bold' }}>Total: {totalKg} kg</span>
+          </div>
           <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-            <div style={{ textAlign: 'center', minWidth: '80px' }}>
-              <img src="/badges/pionero.jpg" alt="Pionero" style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid var(--primary-color)', objectFit: 'cover' }} />
-              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: 'var(--primary-color)', fontWeight: 'bold' }}>Pionero<br/>(1er Envío)</p>
+            <div style={{ textAlign: 'center', minWidth: '80px', opacity: totalKg > 0 ? 1 : 0.3 }}>
+              <img src="/badges/pionero.jpg" alt="Pionero" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg > 0 ? '2px solid var(--primary-color)' : '2px solid #555', objectFit: 'cover', filter: totalKg > 0 ? 'none' : 'grayscale(100%)' }} />
+              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: totalKg > 0 ? 'var(--primary-color)' : 'var(--text-muted)', fontWeight: 'bold' }}>Pionero<br/>(1er Envío)</p>
             </div>
-            <div style={{ textAlign: 'center', minWidth: '80px' }}>
-              <img src="/badges/bronce.jpg" alt="Bronce" style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid #cd7f32', objectFit: 'cover' }} />
-              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: '#cd7f32', fontWeight: 'bold' }}>Bronce<br/>(500kg)</p>
+            <div style={{ textAlign: 'center', minWidth: '80px', opacity: totalKg >= 500 ? 1 : 0.3 }}>
+              <img src="/badges/bronce.jpg" alt="Bronce" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg >= 500 ? '2px solid #cd7f32' : '2px solid #555', objectFit: 'cover', filter: totalKg >= 500 ? 'none' : 'grayscale(100%)' }} />
+              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: totalKg >= 500 ? '#cd7f32' : 'var(--text-muted)', fontWeight: 'bold' }}>Bronce<br/>(500kg)</p>
             </div>
-            <div style={{ textAlign: 'center', minWidth: '80px', opacity: 0.3 }}>
-              <img src="/badges/maestro.jpg" alt="Maestro" style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid #94a3b8', objectFit: 'cover', filter: 'grayscale(100%)' }} />
-              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: 'var(--text-muted)' }}>Maestro<br/>(5 Ton)</p>
+            <div style={{ textAlign: 'center', minWidth: '80px', opacity: totalKg >= 5000 ? 1 : 0.3 }}>
+              <img src="/badges/maestro.jpg" alt="Maestro" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg >= 5000 ? '2px solid #e2e8f0' : '2px solid #555', objectFit: 'cover', filter: totalKg >= 5000 ? 'none' : 'grayscale(100%)' }} />
+              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: totalKg >= 5000 ? '#e2e8f0' : 'var(--text-muted)', fontWeight: 'bold' }}>Maestro<br/>(5 Ton)</p>
             </div>
           </div>
         </div>
