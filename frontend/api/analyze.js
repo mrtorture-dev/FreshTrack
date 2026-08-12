@@ -28,7 +28,7 @@ Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Usa este formato 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.VITE_CEREBRAS_API_KEY}`
+        'Authorization': `Bearer ${process.env.VITE_CEREBRAS_API_KEY || process.env.CEREBRAS_API_KEY}`
       },
       body: JSON.stringify({
         model: "gemma-4-31b",
@@ -37,9 +37,14 @@ Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Usa este formato 
       })
     });
 
-    const data = await response.json();
+    const text = await response.text();
+    if (!response.ok) {
+      throw new Error(`Cerebras Status ${response.status}: ${text}`);
+    }
+
+    const data = JSON.parse(text);
     if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      throw new Error("Respuesta inválida de Cerebras AI");
+      throw new Error("Respuesta inválida de Cerebras AI: " + text);
     }
 
     let aiContent = data.choices[0].message.content.trim();
