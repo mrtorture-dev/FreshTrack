@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, TrendingUp, Leaf, ArrowRight } from 'lucide-react';
+import { ShieldCheck, TrendingUp, Truck, ArrowRight } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 
 export default function Landing() {
@@ -45,10 +45,10 @@ export default function Landing() {
           Realidad Nacional 🇵🇪
         </div>
         <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: '1.2', marginBottom: '1.5rem', background: 'linear-gradient(to right, #fff, #94a3b8)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
-          La Revolución en la Agroexportación Peruana
+          Revolución SCM para Supermercados
         </h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
-          En el Perú, miles de toneladas de productos agrícolas de alta calidad (como las paltas de Ica o los mangos de Piura) sufren mermas debido a la falta de trazabilidad transparente. <strong>FreshTrack</strong> utiliza Arbitrum Stylus (Rust/WASM) y Cerebras AI para garantizar que cada alimento llegue fresco del campo a la mesa, empoderando al agricultor local y asegurando la confianza del consumidor global.
+          En el Perú, los supermercados pierden millones anualmente en mermas de productos perecibles debido a una cadena de suministro (SCM) ineficiente. <strong>FreshTrack</strong> soluciona esto integrando Arbitrum Stylus (Rust/WASM) para trazabilidad inmutable y Cerebras AI para decisiones logísticas ultrarrápidas.
         </p>
         
         <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
@@ -64,11 +64,11 @@ export default function Landing() {
       <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
         <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
           <div ref={icon1Ref} style={{ display: 'inline-block' }}>
-            <Leaf size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
+            <Truck size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
           </div>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Agricultor Empoderado</h3>
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Proveedores Conectados</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            El pequeño y mediano productor peruano registra sus lotes directamente en la blockchain de Arbitrum mediante transacciones de muy bajo costo (Stylus), eliminando intermediarios abusivos.
+            Los productores locales registran cada lote directamente en la blockchain de Arbitrum mediante transacciones de muy bajo costo, garantizando visibilidad en tiempo real del inventario en tránsito.
           </p>
         </div>
         
@@ -76,9 +76,9 @@ export default function Landing() {
           <div ref={icon2Ref} style={{ display: 'inline-block' }}>
             <ShieldCheck size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
           </div>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Transparencia Inmutable</h3>
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Cero Manipulación</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            La información no puede ser alterada. El mercado internacional exige trazabilidad estricta y certificaciones. FreshTrack digitaliza esta confianza mediante contratos inteligentes en Rust.
+            La información de fechas de caducidad y pesos no puede ser alterada. FreshTrack digitaliza el control de calidad mediante contratos inteligentes en Rust para asegurar la verdad absoluta.
           </p>
         </div>
 
@@ -86,9 +86,9 @@ export default function Landing() {
           <div ref={icon3Ref} style={{ display: 'inline-block' }}>
             <TrendingUp size={48} color="#f59e0b" style={{ marginBottom: '1rem' }} />
           </div>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Inteligencia Artificial</h3>
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Reducción de Mermas (IA)</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            Supermercados optimizan su inventario perecible analizando la vida útil restante en tiempo real utilizando la inferencia ultrarrápida de Llama 3.1 en Cerebras AI para evitar desperdicio alimentario.
+            El sistema FEFO (First-Expired, First-Out) del supermercado se potencia analizando la vida útil restante con la inferencia ultrarrápida de Llama 3.1 en Cerebras AI, automatizando alertas de venta rápida.
           </p>
         </div>
       </div>
