@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   // Cargar usuarios desde el JSON cifrado en LocalStorage al iniciar
   useEffect(() => {
-    const saved = localStorage.getItem('freshtrack_db');
+    const saved = localStorage.getItem('freshtrack_db_v2');
     if (saved) {
       try {
         setAllUsers(decryptData(saved));
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       }
     } else {
       setAllUsers(INITIAL_USERS);
-      localStorage.setItem('freshtrack_db', encryptData(INITIAL_USERS));
+      localStorage.setItem('freshtrack_db_v2', encryptData(INITIAL_USERS));
     }
   }, []);
 
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         // Save the updated user to local storage
         const updatedUsers = allUsers.map(u => u.id === found.id ? found : u);
         setAllUsers(updatedUsers);
-        localStorage.setItem('freshtrack_db', encryptData(updatedUsers));
+        localStorage.setItem('freshtrack_db_v2', encryptData(updatedUsers));
       }
       
       setUser(found);
