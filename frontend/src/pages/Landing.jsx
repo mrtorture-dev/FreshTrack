@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, TrendingUp, Sprout, ArrowRight } from 'lucide-react';
+import { ShieldCheck, TrendingUp, Leaf, ArrowRight } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 
 export default function Landing() {
   const headerRef = useRef(null);
   const cardsRef = useRef(null);
-  const sproutRef = useRef(null);
+  const icon1Ref = useRef(null);
+  const icon2Ref = useRef(null);
+  const icon3Ref = useRef(null);
 
   useEffect(() => {
     animate(headerRef.current.children, {
@@ -25,13 +27,14 @@ export default function Landing() {
       easing: 'easeOutQuart'
     });
 
-    animate(sproutRef.current, {
+    animate([icon1Ref.current, icon2Ref.current, icon3Ref.current], {
       scale: [1, 1.15],
-      rotate: [-5, 5],
+      translateY: [-5, 5],
       direction: 'alternate',
       loop: true,
       easing: 'easeInOutSine',
-      duration: 1500
+      duration: 2000,
+      delay: stagger(400)
     });
   }, []);
 
@@ -60,8 +63,8 @@ export default function Landing() {
 
       <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
         <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
-          <div ref={sproutRef} style={{ display: 'inline-block' }}>
-            <Sprout size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
+          <div ref={icon1Ref} style={{ display: 'inline-block' }}>
+            <Leaf size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
           </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Agricultor Empoderado</h3>
           <p style={{ color: 'var(--text-muted)' }}>
@@ -70,7 +73,9 @@ export default function Landing() {
         </div>
         
         <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
-          <ShieldCheck size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
+          <div ref={icon2Ref} style={{ display: 'inline-block' }}>
+            <ShieldCheck size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
+          </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Transparencia Inmutable</h3>
           <p style={{ color: 'var(--text-muted)' }}>
             La información no puede ser alterada. El mercado internacional exige trazabilidad estricta y certificaciones. FreshTrack digitaliza esta confianza mediante contratos inteligentes en Rust.
@@ -78,7 +83,9 @@ export default function Landing() {
         </div>
 
         <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
-          <TrendingUp size={48} color="#f59e0b" style={{ marginBottom: '1rem' }} />
+          <div ref={icon3Ref} style={{ display: 'inline-block' }}>
+            <TrendingUp size={48} color="#f59e0b" style={{ marginBottom: '1rem' }} />
+          </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Inteligencia Artificial</h3>
           <p style={{ color: 'var(--text-muted)' }}>
             Supermercados optimizan su inventario perecible analizando la vida útil restante en tiempo real utilizando la inferencia ultrarrápida de Llama 3.1 en Cerebras AI para evitar desperdicio alimentario.

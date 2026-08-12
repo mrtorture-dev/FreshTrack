@@ -20,11 +20,10 @@ export default function Producer() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const [formData, setFormData] = useState({
-    productType: '',
+    productType: 'Paltas Hass Premium',
     quantity: '',
-    origin: '',
-    expiresIn: '',
-    imageUrl: ''
+    expiresIn: 14,
+    imageUrl: INITIAL_TEMPLATES[0].image
   });
   
   const [generatedBatchId, setGeneratedBatchId] = useState(null);
@@ -47,12 +46,11 @@ export default function Producer() {
     setIsRegistering(true);
     
     try {
-      // registerBatchOnChain(productType, quantity, expiresIn, origin, creatorName, imageUrl)
       const result = await registerBatchOnChain(
         formData.productType,
         formData.quantity,
         formData.expiresIn,
-        formData.origin,
+        "", // origin
         user.name,
         formData.imageUrl
       );
@@ -76,7 +74,6 @@ export default function Producer() {
     setFormData({
       productType: t.name,
       quantity: '',
-      origin: t.defaultOrigin,
       expiresIn: t.defaultExpires,
       imageUrl: t.image
     });
@@ -95,10 +92,10 @@ export default function Producer() {
   );
 
   return (
-    <div>
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <header style={{ marginBottom: '2rem' }}>
-        <h1>Panel de Productor</h1>
-        <p style={{ color: 'var(--text-muted)' }}>Bienvenido, {user.name}. Registra un nuevo lote para subirlo a la red de Arbitrum.</p>
+        <h1 style={{ color: 'var(--text-main)' }}>Panel de Productor</h1>
+        <p style={{ color: 'var(--text-muted)' }}>Registra nuevos lotes de productos en la blockchain para trazabilidad inmutable.</p>
       </header>
 
       <div className="glass-panel" style={{ marginBottom: '2rem', overflow: 'hidden' }}>
@@ -192,19 +189,7 @@ export default function Producer() {
             </div>
 
             <div className="form-group">
-              <label>Lugar de Origen</label>
-              <input 
-                type="text" 
-                className="form-input" 
-                placeholder="Ej. Ica, Perú" 
-                value={formData.origin}
-                onChange={e => setFormData({...formData, origin: e.target.value})}
-                required 
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Días Estimados para Vencimiento</label>
+              <label>Vida útil estimada (Días desde hoy)</label>
               <input 
                 type="number" 
                 className="form-input" 

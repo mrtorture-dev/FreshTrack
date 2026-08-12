@@ -129,14 +129,13 @@ export default function Dashboard() {
                 <th>ID Lote</th>
                 <th>Producto</th>
                 <th>Productor</th>
-                <th>Origen</th>
-              <th>Cantidad (kg)</th>
-              <th>Estado</th>
-              <th>Acción Recomendada</th>
-              <th>Verificación Web3</th>
-            </tr>
-          </thead>
-          <tbody>
+                <th>Cantidad (kg)</th>
+                <th>Estado</th>
+                <th>Acción Recomendada</th>
+                <th>Verificación Web3</th>
+              </tr>
+            </thead>
+            <tbody>
             {loading ? (
               <tr><td colSpan="8" style={{textAlign: 'center'}}>Sincronizando con Arbitrum Sepolia...</td></tr>
             ) : batches.length === 0 ? (
@@ -156,7 +155,6 @@ export default function Dashboard() {
                     {batch.type}
                   </td>
                   <td>{batch.producer || batch.creatorName || 'Productor Demo'}</td>
-                  <td>{batch.origin}</td>
                   <td>{batch.quantity} kg</td>
                   <td>
                     <span className={`badge ${batch.condition}`}>
