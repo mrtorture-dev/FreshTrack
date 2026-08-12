@@ -161,7 +161,7 @@ export default function Dashboard() {
                   <td>{batch.quantity} kg</td>
                   <td>
                     <span className={`badge ${batch.condition}`}>
-                      {batch.expires} días restantes
+                      {batch.timeLeftStr || batch.expires + 'd'} restantes
                     </span>
                   </td>
                   <td>
