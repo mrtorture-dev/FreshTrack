@@ -100,7 +100,9 @@ export const fetchAllBatches = async () => {
   let txHashes = {};
   try {
     const filter = contract.filters.BatchRegistered();
-    const events = await contract.queryFilter(filter, 0, 'latest');
+    // Limitar rango de búsqueda de eventos para evitar errores de RPC
+    // El contrato fue desplegado recientemente, empezamos desde el bloque de deploy
+    const events = await contract.queryFilter(filter, 297250000, 'latest');
     events.forEach(e => {
       const id = Number(e.args.batch_id);
       txHashes[id] = e.transactionHash;

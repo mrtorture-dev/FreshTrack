@@ -11,8 +11,8 @@ export default async function handler(req, res) {
   const promptText = `
 Eres un experto en logística de supermercados. Estamos evaluando un inventario en tiempo real. 
 Hoy es ${new Date().toLocaleDateString()}.
-Aquí están los productos y sus fechas de vencimiento:
-${batches.map(b => `- ID: ${b.id}, Producto: ${b.productType}, Vence: ${new Date(Number(b.expirationDate) * 1000).toLocaleDateString()}`).join('\n')}
+Aquí están los productos en el blockchain de Arbitrum:
+${batches.map(b => `- Lote: ${b.id}, Producto: ${b.productType}, Productor: ${b.creatorName}, Faltan: ${b.daysLeft} días`).join('\n')}
 
 Analiza si el producto es altamente perecible y la urgencia basada en el tiempo restante.
 PROHIBIDO responder con "Datos insuficientes" o similares. DEBES asumir y dar una recomendación definitiva para cada item.
@@ -27,7 +27,7 @@ Responde ÚNICAMENTE con un JSON válido, sin texto adicional, donde las claves 
         'Authorization': `Bearer ${process.env.VITE_CEREBRAS_API_KEY}`
       },
       body: JSON.stringify({
-        model: "gemma-4-31b",
+        model: "llama3.1-8b",
         messages: [{ role: "user", content: promptText }],
         temperature: 0.2
       })
