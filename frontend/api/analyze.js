@@ -15,9 +15,14 @@ Aquí están los productos en el blockchain de Arbitrum:
 ${batches.map(b => `- Lote: ${b.id}, Producto: ${b.productType}, Productor: ${b.creatorName}, Faltan: ${b.daysLeft} días`).join('\n')}
 
 Analiza si el producto es altamente perecible y la urgencia basada en el tiempo restante.
-PROHIBIDO responder con "Datos insuficientes" o similares. DEBES asumir y dar una recomendación definitiva para cada item.
-Responde ÚNICAMENTE con un JSON válido, sin texto adicional, donde las claves sean los IDs numéricos y los valores sean una frase de acción ultra corta (máximo 3-4 palabras, ej: "Oferta urgente (Perecible)", "Almacén normal", "Donar inmediatamente", "Prioridad alta", "Venta rápida").
-  `;
+Detecta anomalías (ej. si un producto perecible como Paltas o Tomates tiene demasiados días restantes, o fechas imposibles).
+PROHIBIDO responder con "Datos insuficientes" o similares. DEBES asumir y dar una recomendación.
+Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Las claves deben ser los IDs numéricos y los valores deben ser objetos JSON con este formato exacto:
+{
+  "action": "Frase de acción ultra corta (máx 3-4 palabras)",
+  "anomaly": true o false,
+  "reason": "Explicación corta de la anomalía, o vacío si no hay"
+}
 
   try {
     const response = await fetch('https://api.cerebras.ai/v1/chat/completions', {

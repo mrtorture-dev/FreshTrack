@@ -138,12 +138,13 @@ export const fetchAllBatches = async () => {
     console.warn("No se pudieron obtener eventos:", e);
   }
 
+  const invalidated = JSON.parse(localStorage.getItem('freshtrack_invalidated') || '[]');
   let batches = [];
   for (let i = 1; i <= count; i++) {
     try {
       const id = BigInt(i);
       const registered = await contract.isRegistered(id);
-      if (!registered) continue;
+      if (!registered || invalidated.includes(Number(id))) continue;
 
       // Para evitar errores de decodificación ABI con tuplas mixtas en Stylus, leemos individualmente
       const rawProductName = await contract.getProductName(id);
@@ -178,7 +179,8 @@ export const fetchAllBatches = async () => {
         timeLeftStr,
         txHash: txHashes[i] || null,
         creatorName: producer,
-        imageUrl: ""
+        imageUrl: "",
+        registrationDate: new Date(Date.now() - (1000 - i) * 3600000).toLocaleDateString() // Mock de fecha de registro referencial
       });
     } catch (e) {
       console.warn(`Error leyendo lote ${i}:`, e);

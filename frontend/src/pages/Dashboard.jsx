@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck, Cpu, LayoutDashboard } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { fetchAllBatches } from '../utils/blockchain';
+import { fetchAllBatches, registerBatchOnChain } from '../utils/blockchain';
 import { analyzeInventoryWithAI } from '../utils/ai';
 import { animate, stagger } from 'animejs';
 
@@ -63,6 +63,28 @@ export default function Dashboard() {
       });
     }
   }, [loading, batches]);
+
+  const handleFixAnomaly = async (batch) => {
+    const aiData = aiRecommendations[batch.id];
+    const newDays = window.prompt(`La IA Cerebras detectó una anomalía en el registro del lote #${batch.id} (${batch.type}).\n\nMotivo detectado:\n"${aiData?.reason}"\n\nPor favor, ingresa la cantidad correcta de días de caducidad para emitir un nuevo lote rectificado (ej. 14):`, "14");
+    
+    if (newDays !== null && !isNaN(newDays) && newDays !== "") {
+      try {
+        alert("Firmando rectificación on-chain... Por favor, espera.");
+        await registerBatchOnChain(batch.type, batch.quantity, newDays, batch.origin, batch.creatorName, batch.imageUrl);
+        
+        // Guardar el viejo ID como invalidado para que ya no salga en el dashboard
+        const invalid = JSON.parse(localStorage.getItem('freshtrack_invalidated') || '[]');
+        invalid.push(batch.id);
+        localStorage.setItem('freshtrack_invalidated', JSON.stringify(invalid));
+        
+        alert("¡Registro rectificado en Arbitrum con éxito! Refrescando inventario...");
+        window.location.reload();
+      } catch (e) {
+        alert("Error al intentar rectificar: " + e.message);
+      }
+    }
+  };
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
@@ -130,11 +152,12 @@ export default function Dashboard() {
             <thead>
               <tr>
                 <th>ID Lote</th>
+                <th>Fecha Reg.</th>
                 <th>Producto</th>
                 <th>Productor</th>
                 <th>Cantidad (kg)</th>
                 <th>Estado</th>
-                <th>Acción Recomendada</th>
+                <th>Acción / Análisis IA</th>
                 <th>Verificación Web3</th>
               </tr>
             </thead>
@@ -147,6 +170,7 @@ export default function Dashboard() {
               batches.map(batch => (
                 <tr key={batch.id}>
                   <td><strong>#{batch.id.toString().padStart(4, '0')}</strong></td>
+                  <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{batch.registrationDate}</td>
                   <td style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     {batch.imageUrl ? (
                       <img src={batch.imageUrl} alt={batch.type} style={{ width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover' }} />
@@ -166,9 +190,19 @@ export default function Dashboard() {
                   </td>
                   <td>
                     {aiRecommendations[batch.id] ? (
-                      <span style={{ color: '#a855f7', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Cpu size={14}/> {aiRecommendations[batch.id]}
-                      </span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <span style={{ color: aiRecommendations[batch.id].anomaly ? 'var(--danger-color)' : '#a855f7', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <Cpu size={14}/> {aiRecommendations[batch.id].action}
+                        </span>
+                        {aiRecommendations[batch.id].anomaly && (
+                          <button 
+                            onClick={() => handleFixAnomaly(batch)}
+                            style={{ fontSize: '0.7rem', padding: '0.2rem 0.5rem', background: 'var(--danger-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                          >
+                            Corregir Falla
+                          </button>
+                        )}
+                      </div>
                     ) : (
                       <>
                         {batch.condition === 'danger' && <span style={{color: 'var(--danger-color)', fontWeight: 600}}>Venta rápida (oferta)</span>}
