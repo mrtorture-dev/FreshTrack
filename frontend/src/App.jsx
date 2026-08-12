@@ -23,18 +23,17 @@ function MainLayout() {
             <span style={{ fontWeight: 'bold' }}>FreshTrack</span>
           </div>
           <nav style={{ display: 'flex', gap: '1rem' }}>
-            <Link to="/" style={{ color: 'var(--text-color)', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
-            <Link to="/producer" style={{ color: 'var(--text-color)', textDecoration: 'none', fontWeight: 'bold' }}>Productor</Link>
-            <Link to="/dashboard" style={{ color: 'var(--text-color)', textDecoration: 'none', fontWeight: 'bold' }}>Supermercado</Link>
+            <Link to="/" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 'bold' }}>Inicio</Link>
+            <Link to="/login" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 'bold', background: 'var(--primary-color)', padding: '0.4rem 1rem', borderRadius: '8px' }}>Acceder</Link>
           </nav>
         </header>
 
         <main className="container" style={{ padding: '2rem' }}>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/dashboard" element={<Login />} />
-            <Route path="/producer" element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/trace/:id" element={<Trace />} />
+            <Route path="*" element={<Login />} />
           </Routes>
         </main>
       </div>

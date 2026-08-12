@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, TrendingUp, Users, Truck, ArrowRight } from 'lucide-react';
+import { TrendingUp, Users, Truck, ArrowRight } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 
 export default function Landing() {
   const headerRef = useRef(null);
   const cardsRef = useRef(null);
   const icon1Ref = useRef(null);
-  const icon2Ref = useRef(null);
   const icon3Ref = useRef(null);
   const truckRef = useRef(null);
 
@@ -28,7 +27,7 @@ export default function Landing() {
       easing: 'easeOutQuart'
     });
 
-    animate([icon1Ref.current, icon2Ref.current, icon3Ref.current], {
+    animate([icon1Ref.current, icon3Ref.current], {
       scale: [1, 1.15],
       translateY: [-5, 5],
       direction: 'alternate',
@@ -60,49 +59,38 @@ export default function Landing() {
           Revolución SCM para Supermercados
         </h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
-          En el Perú, los supermercados pierden millones anualmente en mermas de productos perecibles debido a una cadena de suministro (SCM) ineficiente. <strong>FreshTrack</strong> soluciona esto integrando Arbitrum Stylus (Rust/WASM) para trazabilidad inmutable y Cerebras AI para decisiones logísticas ultrarrápidas.
+          En el Perú, los supermercados pierden millones anualmente en mermas de productos perecibles debido a una cadena de suministro (SCM) ineficiente. <strong>FreshTrack</strong> soluciona esto integrando Arbitrum Stylus (Rust) para trazabilidad inmutable y Cerebras AI para decisiones logísticas ultrarrápidas, uniendo a productores locales con grandes superficies de venta.
         </p>
         
         <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-          <Link to="/producer" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}>
-            Demo: Productor Agrícola <ArrowRight size={18} />
-          </Link>
-          <Link to="/dashboard" className="btn-primary" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1.5rem', fontSize: '1.1rem' }}>
-            Demo: Supermercado
+          <Link to="/login" className="btn-primary" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.2rem', padding: '1rem 2rem' }}>
+            Acceder a FreshTrack <ArrowRight size={20} />
           </Link>
         </div>
       </header>
 
       <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem', position: 'relative', zIndex: 1 }}>
-        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
-          <div ref={icon1Ref} style={{ display: 'inline-block' }}>
-            <Users size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
-          </div>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Proveedores Conectados</h3>
-          <p style={{ color: 'var(--text-muted)' }}>
-            Los productores locales registran cada lote directamente en la blockchain de Arbitrum mediante transacciones de muy bajo costo, garantizando visibilidad en tiempo real del inventario en tránsito.
-          </p>
-        </div>
         
-        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
-          <div ref={icon2Ref} style={{ display: 'inline-block' }}>
-            <ShieldCheck size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
+        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem', borderTop: '4px solid var(--success-color)' }}>
+          <div ref={icon1Ref} style={{ display: 'inline-block' }}>
+            <Users size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
           </div>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Cero Manipulación</h3>
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>Para el Productor</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            La información de fechas de caducidad y pesos no puede ser alterada. FreshTrack digitaliza el control de calidad mediante contratos inteligentes en Rust para asegurar la verdad absoluta.
+            <strong>Cero manipulación:</strong> Registra tus lotes en Arbitrum Stylus (Rust) para garantizar la calidad de tu producto agrícola. Gana NFTs (medallas Web3) según tu volumen de entrega y accede directamente a nuevos mercados corporativos.
           </p>
         </div>
 
-        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
+        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem', borderTop: '4px solid #f59e0b' }}>
           <div ref={icon3Ref} style={{ display: 'inline-block' }}>
             <TrendingUp size={48} color="#f59e0b" style={{ marginBottom: '1rem' }} />
           </div>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Reducción de Mermas (IA)</h3>
+          <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>Para el Supermercado</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            El sistema FEFO (First-Expired, First-Out) del supermercado se potencia analizando la vida útil restante con la inferencia ultrarrápida de Gemma 4 31B en Cerebras AI, automatizando alertas de venta rápida.
+            <strong>Reducción de Mermas (IA):</strong> Automatiza el inventario FEFO (First-Expired, First-Out). Cerebras AI (Gemma 4 31B) analiza la vida útil de cada lote en tránsito en tiempo real para recomendar acciones de venta rápida y evitar desperdicios.
           </p>
         </div>
+
       </div>
     </div>
   );
