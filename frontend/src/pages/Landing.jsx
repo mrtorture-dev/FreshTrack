@@ -6,6 +6,7 @@ import { animate, stagger } from 'animejs';
 export default function Landing() {
   const headerRef = useRef(null);
   const cardsRef = useRef(null);
+  const sproutRef = useRef(null);
 
   useEffect(() => {
     animate(headerRef.current.children, {
@@ -23,6 +24,15 @@ export default function Landing() {
       delay: stagger(150, { start: 600 }),
       easing: 'easeOutQuart'
     });
+
+    animate(sproutRef.current, {
+      scale: [1, 1.15],
+      rotate: [-5, 5],
+      direction: 'alternate',
+      loop: true,
+      easing: 'easeInOutSine',
+      duration: 1500
+    });
   }, []);
 
   return (
@@ -31,7 +41,7 @@ export default function Landing() {
         <div style={{ display: 'inline-block', padding: '0.5rem 1rem', background: 'rgba(56, 189, 248, 0.1)', color: 'var(--primary-color)', borderRadius: '20px', fontWeight: 'bold', marginBottom: '1rem' }}>
           Realidad Nacional 🇵🇪
         </div>
-        <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem', background: 'linear-gradient(to right, #fff, #94a3b8)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
+        <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: '1.2', marginBottom: '1.5rem', background: 'linear-gradient(to right, #fff, #94a3b8)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
           La Revolución en la Agroexportación Peruana
         </h1>
         <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
@@ -50,7 +60,9 @@ export default function Landing() {
 
       <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem' }}>
         <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
-          <Sprout size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
+          <div ref={sproutRef} style={{ display: 'inline-block' }}>
+            <Sprout size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
+          </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Agricultor Empoderado</h3>
           <p style={{ color: 'var(--text-muted)' }}>
             El pequeño y mediano productor peruano registra sus lotes directamente en la blockchain de Arbitrum mediante transacciones de muy bajo costo (Stylus), eliminando intermediarios abusivos.

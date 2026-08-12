@@ -16,8 +16,8 @@ function MainLayout() {
   
   if (!user) {
     return (
-      <div className="app-container">
-        <header style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <header style={{ padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--glass-border)', background: 'var(--panel-bg)', backdropFilter: 'blur(10px)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Logo size={24} />
             <span style={{ fontWeight: 'bold' }}>FreshTrack</span>
