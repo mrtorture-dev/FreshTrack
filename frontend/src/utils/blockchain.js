@@ -43,13 +43,13 @@ export const getSignerContract = () => {
 export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
   const contract = getSignerContract();
 
-  // Parseamos los inputs numéricos (vienen como strings del form)
-  const expDays = Number(expiresIn) || 0;
-  const weightNum = Number(quantity) || 0;
+  // Parseamos los inputs numéricos (vienen como strings del form). Fallback a 1 si son 0 o inválidos
+  const expDays = Number(expiresIn) || 14;
+  const weightNum = Number(quantity) || 1;
 
-  // expiresIn son días → timestamp Unix
-  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expDays * 86400);
-  // quantity en gramos
+  // expirationDate: agregamos 1 hora extra (3600s) para evitar que el reloj local atrás del bloque dispare InvalidExpiration
+  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expDays * 86400) + BigInt(3600);
+  // quantity en gramos (mínimo 1000 para evitar InvalidWeight)
   const weightGrams = BigInt(Math.floor(weightNum * 1000));
 
   console.log("Enviando TX a Stylus con datos:", { productType, creatorName, expirationDate, weightGrams });
