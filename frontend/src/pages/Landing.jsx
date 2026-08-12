@@ -71,9 +71,9 @@ export default function Landing() {
 
       <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem', position: 'relative', zIndex: 1 }}>
         
-        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem', borderTop: '4px solid var(--success-color)' }}>
+        <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem', borderTop: '4px solid var(--primary-color)' }}>
           <div ref={icon1Ref} style={{ display: 'inline-block' }}>
-            <Users size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
+            <Users size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
           </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>Para el Productor</h3>
           <p style={{ color: 'var(--text-muted)' }}>
