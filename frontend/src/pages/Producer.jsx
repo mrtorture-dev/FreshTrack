@@ -36,13 +36,14 @@ export default function Producer() {
     setIsRegistering(true);
     
     try {
-      // El nuevo contrato almacena strings reales on-chain.
-      // registerBatchOnChain(productName, producerName, quantityKg, expiresInDays)
+      // registerBatchOnChain(productType, quantity, expiresIn, origin, creatorName, imageUrl)
       const result = await registerBatchOnChain(
         formData.productType,
-        user.name,
         formData.quantity,
-        formData.expiresIn
+        formData.expiresIn,
+        formData.origin,
+        user.name,
+        formData.imageUrl
       );
       
       if (result?.batchId) {
