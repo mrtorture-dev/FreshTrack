@@ -92,7 +92,7 @@ function MainLayout() {
               <Route path="/" element={<Producer />} />
             )}
             <Route path="/trace/:id" element={<Trace />} />
-            <Route path="*" element={<Dashboard />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>

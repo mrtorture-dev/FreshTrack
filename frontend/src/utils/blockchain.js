@@ -58,10 +58,11 @@ export const mintNFTAndGetTokenId = async (userAddress, milestoneId, uri) => {
     await tx.wait();
   }
   
-  const filter = nftContract.filters.MilestoneMinted(userAddress, milestoneId);
+  const filter = nftContract.filters.MilestoneMinted(userAddress);
   const events = await nftContract.queryFilter(filter);
-  if (events.length > 0) {
-    return events[0].args[2].toString(); // The tokenId is the 3rd argument
+  const matchingEvent = events.find(e => e.args[1].toString() === milestoneId.toString());
+  if (matchingEvent) {
+    return matchingEvent.args[2].toString(); // The tokenId is the 3rd argument
   }
   throw new Error("No se pudo encontrar el Token ID");
 };
