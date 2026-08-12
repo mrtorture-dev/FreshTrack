@@ -27,14 +27,23 @@ const ABI = [
 const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
 const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY;
 
-export const getContract = () => {
+export const getReadOnlyContract = () => {
   const provider = new ethers.JsonRpcProvider(RPC_URL);
-  const signer = new ethers.Wallet(PRIVATE_KEY, provider);
+  return new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
+};
+
+export const getSignerContract = async () => {
+  if (!window.ethereum) {
+    throw new Error("MetaMask (u otra wallet Web3) no está instalada");
+  }
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const signer = await provider.getSigner();
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
 export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
-  const contract = getContract();
+  const contract = await getSignerContract();
 
   // Parseamos los inputs numéricos (vienen como strings del form)
   const expDays = Number(expiresIn) || 0;
@@ -79,7 +88,7 @@ export const registerBatchOnChain = async (productType, quantity, expiresIn, ori
 };
 
 export const fetchAllBatches = async () => {
-  const contract = getContract();
+  const contract = getReadOnlyContract();
   const countRaw = await contract.getBatchCount();
   const count = Number(countRaw);
 
