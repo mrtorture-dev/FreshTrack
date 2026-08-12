@@ -81,6 +81,27 @@ export default function Producer() {
     }
   };
 
+  const addNFTToMetaMask = async (tokenId) => {
+    if (!window.ethereum) {
+      alert("Por favor instala la extensión de MetaMask primero.");
+      return;
+    }
+    try {
+      await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC721',
+          options: {
+            address: '0x314AC13cb01eEb55205D967dF540Ba59769D0D52', // FreshTrackNFT
+            tokenId: tokenId.toString(),
+          },
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSelectTemplate = (t) => {
     setSelectedTemplate(t.id);
     setFormData({
@@ -148,17 +169,20 @@ export default function Producer() {
             <span style={{ fontSize: '0.8rem', color: 'var(--primary-color)', fontWeight: 'bold' }}>Total: {totalKg} kg</span>
           </div>
           <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-            <div style={{ textAlign: 'center', minWidth: '80px', opacity: totalKg > 0 ? 1 : 0.3 }}>
+            <div style={{ textAlign: 'center', minWidth: '90px', opacity: totalKg > 0 ? 1 : 0.3 }}>
               <img src="/badges/pionero.jpg" alt="Pionero" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg > 0 ? '2px solid var(--primary-color)' : '2px solid #555', objectFit: 'cover', filter: totalKg > 0 ? 'none' : 'grayscale(100%)' }} />
-              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: totalKg > 0 ? 'var(--primary-color)' : 'var(--text-muted)', fontWeight: 'bold' }}>Pionero<br/>(1er Envío)</p>
+              <p style={{ fontSize: '0.7rem', margin: '0.5rem 0', color: totalKg > 0 ? 'var(--primary-color)' : 'var(--text-muted)', fontWeight: 'bold' }}>Pionero<br/>(1er Envío)</p>
+              {totalKg > 0 && <button onClick={() => addNFTToMetaMask(1)} style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: '#f6851b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>🦊 MetaMask</button>}
             </div>
-            <div style={{ textAlign: 'center', minWidth: '80px', opacity: totalKg >= 500 ? 1 : 0.3 }}>
+            <div style={{ textAlign: 'center', minWidth: '90px', opacity: totalKg >= 500 ? 1 : 0.3 }}>
               <img src="/badges/bronce.jpg" alt="Bronce" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg >= 500 ? '2px solid #cd7f32' : '2px solid #555', objectFit: 'cover', filter: totalKg >= 500 ? 'none' : 'grayscale(100%)' }} />
-              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: totalKg >= 500 ? '#cd7f32' : 'var(--text-muted)', fontWeight: 'bold' }}>Bronce<br/>(500kg)</p>
+              <p style={{ fontSize: '0.7rem', margin: '0.5rem 0', color: totalKg >= 500 ? '#cd7f32' : 'var(--text-muted)', fontWeight: 'bold' }}>Bronce<br/>(500kg)</p>
+              {totalKg >= 500 && <button onClick={() => addNFTToMetaMask(2)} style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: '#f6851b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>🦊 MetaMask</button>}
             </div>
-            <div style={{ textAlign: 'center', minWidth: '80px', opacity: totalKg >= 5000 ? 1 : 0.3 }}>
+            <div style={{ textAlign: 'center', minWidth: '90px', opacity: totalKg >= 5000 ? 1 : 0.3 }}>
               <img src="/badges/maestro.jpg" alt="Maestro" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg >= 5000 ? '2px solid #e2e8f0' : '2px solid #555', objectFit: 'cover', filter: totalKg >= 5000 ? 'none' : 'grayscale(100%)' }} />
-              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: totalKg >= 5000 ? '#e2e8f0' : 'var(--text-muted)', fontWeight: 'bold' }}>Maestro<br/>(5 Ton)</p>
+              <p style={{ fontSize: '0.7rem', margin: '0.5rem 0', color: totalKg >= 5000 ? '#e2e8f0' : 'var(--text-muted)', fontWeight: 'bold' }}>Maestro<br/>(5 Ton)</p>
+              {totalKg >= 5000 && <button onClick={() => addNFTToMetaMask(3)} style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: '#f6851b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>🦊 MetaMask</button>}
             </div>
           </div>
         </div>
