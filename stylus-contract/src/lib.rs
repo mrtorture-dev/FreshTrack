@@ -4,10 +4,11 @@
 #[macro_use]
 extern crate alloc;
 
+use alloc::vec::Vec;
 use alloc::string::String;
 
 use stylus_sdk::{
-    alloy_primitives::{Address, U256},
+    alloy_primitives::{Address, U256, U64},
     alloy_sol_types::sol,
     block, evm, msg,
     prelude::*,
@@ -136,8 +137,8 @@ impl FreshTrackTrace {
         let mut batch = self.batches.setter(id);
         batch.product_name.set_str(&product_name);
         batch.producer.set_str(&producer);
-        batch.expiration_date.set(expiration_date);
-        batch.weight_grams.set(weight_grams);
+        batch.expiration_date.set(U64::from(expiration_date));
+        batch.weight_grams.set(U64::from(weight_grams));
 
         evm::log(BatchRegistered {
             batch_id: id,
@@ -177,8 +178,8 @@ impl FreshTrackTrace {
         Ok((
             b.product_name.get_string(),
             b.producer.get_string(),
-            b.expiration_date.get(),
-            b.weight_grams.get(),
+            b.expiration_date.get().to::<u64>(),
+            b.weight_grams.get().to::<u64>(),
         ))
     }
 
@@ -203,7 +204,7 @@ impl FreshTrackTrace {
         if !self.is_registered(batch_id) {
             return Err(TraceError::BatchNotFound(BatchNotFound {}));
         }
-        Ok(self.batches.getter(batch_id).expiration_date.get())
+        Ok(self.batches.getter(batch_id).expiration_date.get().to::<u64>())
     }
 
     /// Peso en gramos.
@@ -211,7 +212,7 @@ impl FreshTrackTrace {
         if !self.is_registered(batch_id) {
             return Err(TraceError::BatchNotFound(BatchNotFound {}));
         }
-        Ok(self.batches.getter(batch_id).weight_grams.get())
+        Ok(self.batches.getter(batch_id).weight_grams.get().to::<u64>())
     }
 
     /// True si el lote ya caducó respecto al timestamp del bloque actual.
@@ -219,7 +220,7 @@ impl FreshTrackTrace {
         if !self.is_registered(batch_id) {
             return Err(TraceError::BatchNotFound(BatchNotFound {}));
         }
-        let exp = self.batches.getter(batch_id).expiration_date.get();
+        let exp = self.batches.getter(batch_id).expiration_date.get().to::<u64>();
         Ok(exp <= block::timestamp())
     }
 
