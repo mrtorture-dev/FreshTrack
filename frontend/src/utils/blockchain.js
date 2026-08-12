@@ -157,7 +157,14 @@ export const fetchAllBatches = async () => {
 
       const now = Math.floor(Date.now() / 1000);
       const expTs = Number(expirationTimestamp);
-      const daysLeft = Math.max(0, Math.round((expTs - now) / 86400));
+      const diffSeconds = Math.max(0, expTs - now);
+      const daysLeft = Math.floor(diffSeconds / 86400);
+      const hoursLeft = Math.floor((diffSeconds % 86400) / 3600);
+      const timeLeftStr = `${daysLeft}d ${hoursLeft}h`;
+
+      if (producer === "Productor Desconocido" || producer === "" || productName === "Producto Sin Nombre") {
+        continue; // Skip invalid or unknown data
+      }
 
       batches.push({
         id: i,
@@ -165,9 +172,10 @@ export const fetchAllBatches = async () => {
         type: productName,
         quantity: Math.round(Number(weightGrams) / 1000),
         origin: "Arbitrum Stylus (Rust/WASM)",
-        status: daysLeft > 7 ? "Registrado" : daysLeft > 0 ? "En Tránsito" : "Entregado",
+        status: daysLeft > 7 ? "Registrado" : diffSeconds > 0 ? "En Tránsito" : "Entregado",
         expiresRaw: expTs,
         daysLeft,
+        timeLeftStr,
         txHash: txHashes[i] || null,
         creatorName: producer,
         imageUrl: ""

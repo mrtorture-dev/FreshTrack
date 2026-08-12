@@ -51,14 +51,16 @@ function MainLayout() {
           <nav className="nav-links">
             {user.role === 'store' && (
               <>
-                <NavLink to="/" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+                <NavLink to="/" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
                   <LayoutDashboard size={20} />
-                  Panel FEFO
+                  <span>Panel Tienda</span>
                 </NavLink>
-                <NavLink to="/users" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-                  <Users size={20} />
-                  Gestión Usuarios
-                </NavLink>
+                {user.username === 'admin' && (
+                  <NavLink to="/users" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>
+                    <Users size={20} />
+                    <span>Usuarios</span>
+                  </NavLink>
+                )}
               </>
             )}
             

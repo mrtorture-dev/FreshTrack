@@ -8,12 +8,18 @@ import { animate, stagger } from 'animejs';
 const INITIAL_TEMPLATES = [
   { id: 1, name: 'Paltas Hass Premium', image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Ica, Perú', defaultExpires: 14 },
   { id: 2, name: 'Tomate Cherry Orgánico', image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Huaral, Perú', defaultExpires: 10 },
-  { id: 3, name: 'Lechuga Seda', image: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Trujillo, Perú', defaultExpires: 7 }
+  { id: 3, name: 'Lechuga Seda', image: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Trujillo, Perú', defaultExpires: 7 },
+  { id: 4, name: 'Mango Kent Exportación', image: 'https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Piura, Perú', defaultExpires: 12 },
+  { id: 5, name: 'Arándanos Azules', image: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'La Libertad, Perú', defaultExpires: 21 },
+  { id: 6, name: 'Espárragos Verdes', image: 'https://images.unsplash.com/photo-1515002246320-8af3aa169730?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Ica, Perú', defaultExpires: 18 }
 ];
 
 export default function Producer() {
   const { user } = useAuth();
-  const [templates, setTemplates] = useState(INITIAL_TEMPLATES);
+  const [templates, setTemplates] = useState(() => {
+    const saved = localStorage.getItem('freshtrack_templates');
+    return saved ? JSON.parse(saved) : INITIAL_TEMPLATES;
+  });
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [isAddingTemplate, setIsAddingTemplate] = useState(false);
   const [newTemplate, setNewTemplate] = useState({ name: '', image: '', defaultOrigin: '', defaultExpires: '' });
@@ -125,10 +131,24 @@ export default function Producer() {
 
   const handleAddTemplate = (e) => {
     e.preventDefault();
-    const t = { ...newTemplate, id: Date.now() };
-    setTemplates([...templates, t]);
-    setIsAddingTemplate(false);
+    const newT = {
+      id: Date.now(),
+      ...newTemplate,
+      defaultExpires: Number(newTemplate.defaultExpires) || 14
+    };
+    const updated = [...templates, newT];
+    setTemplates(updated);
+    localStorage.setItem('freshtrack_templates', JSON.stringify(updated));
     setNewTemplate({ name: '', image: '', defaultOrigin: '', defaultExpires: '' });
+    setIsAddingTemplate(false);
+  };
+
+  const handleDeleteTemplate = (id, e) => {
+    e.stopPropagation();
+    const updated = templates.filter(t => t.id !== id);
+    setTemplates(updated);
+    localStorage.setItem('freshtrack_templates', JSON.stringify(updated));
+    if (selectedTemplate === id) setSelectedTemplate(null);
   };
 
   const filteredTemplates = templates.filter(t => 
@@ -223,17 +243,21 @@ export default function Producer() {
         </div>
 
         {isAddingTemplate && (
-          <form onSubmit={handleAddTemplate} style={{ marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', alignItems: 'end', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '12px' }}>
+          <form onSubmit={handleAddTemplate} style={{ marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '1rem', alignItems: 'end', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '12px' }}>
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <label>Nuevo Producto (Nombre)</label>
+              <label>Nombre</label>
               <input type="text" className="form-input" required value={newTemplate.name} onChange={e => setNewTemplate({...newTemplate, name: e.target.value})} />
             </div>
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <label>URL de la Imagen (JPG/PNG)</label>
+              <label>Imagen URL</label>
               <input type="url" className="form-input" required value={newTemplate.image} onChange={e => setNewTemplate({...newTemplate, image: e.target.value})} />
             </div>
             <div className="form-group" style={{ marginBottom: 0 }}>
-              <button type="submit" className="btn-primary">Guardar Plantilla</button>
+              <label>Días Vida</label>
+              <input type="number" className="form-input" required value={newTemplate.defaultExpires} onChange={e => setNewTemplate({...newTemplate, defaultExpires: e.target.value})} />
+            </div>
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <button type="submit" className="btn-primary">Guardar</button>
             </div>
           </form>
         )}
@@ -267,9 +291,13 @@ export default function Producer() {
                 transition: 'transform 0.2s, border 0.2s'
               }}
             >
-              <img src={t.image} alt={t.name} style={{ width: '100%', height: '120px', objectFit: 'cover' }} />
-              <div style={{ padding: '0.75rem' }}>
-                <strong style={{ display: 'block', fontSize: '0.9rem' }}>{t.name}</strong>
+              <img src={t.image || 'https://images.unsplash.com/photo-1596199050105-6d5d956d90d4?auto=format&fit=crop&w=300&q=80'} alt={t.name} style={{ width: '100%', height: '100px', objectFit: 'cover', display: 'block' }} />
+              <div style={{ padding: '0.8rem', position: 'relative' }}>
+                <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '0.9rem', color: 'var(--text-main)' }}>{t.name}</h4>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t.defaultExpires} días de vida</p>
+                {t.id > 10 && (
+                  <button onClick={(e) => handleDeleteTemplate(t.id, e)} style={{ position: 'absolute', top: '0.8rem', right: '0.8rem', background: 'transparent', border: 'none', color: 'var(--danger-color)', cursor: 'pointer', fontSize: '1rem', padding: 0 }} title="Eliminar plantilla">✖</button>
+                )}
               </div>
             </div>
           ))}

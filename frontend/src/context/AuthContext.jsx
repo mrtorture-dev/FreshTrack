@@ -34,8 +34,8 @@ export const AuthProvider = ({ children }) => {
   const login = (username, password) => {
     const found = allUsers.find(u => u.username === username && u.password === password);
     if (found) {
-      // If user doesn't have a wallet, generate one
-      if (!found.privateKey) {
+      // If user doesn't have a wallet, generate one only for producers
+      if (!found.privateKey && found.role === 'producer') {
         const wallet = ethers.Wallet.createRandom();
         found.privateKey = wallet.privateKey;
         found.address = wallet.address;
@@ -60,13 +60,13 @@ export const AuthProvider = ({ children }) => {
     const newId = Math.max(...allUsers.map(u => u.id), 0) + 1;
     const newUserList = [...allUsers, { id: newId, name, username, password, role, isMain: false }];
     setAllUsers(newUserList);
-    localStorage.setItem('freshtrack_db', encryptData(newUserList));
+    localStorage.setItem('freshtrack_db_v2', encryptData(newUserList));
   };
   
   const removeUser = (id) => {
     const newUserList = allUsers.filter(u => u.id !== id || u.isMain);
     setAllUsers(newUserList);
-    localStorage.setItem('freshtrack_db', encryptData(newUserList));
+    localStorage.setItem('freshtrack_db_v2', encryptData(newUserList));
   };
 
   const storeUsers = allUsers.filter(u => u.role === 'store');
