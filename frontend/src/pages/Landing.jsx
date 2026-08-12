@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, TrendingUp, Sprout, ArrowRight } from 'lucide-react';
-import anime from 'animejs';
+import anime from 'animejs/lib/anime.es.js';
 
 export default function Landing() {
   const headerRef = useRef(null);

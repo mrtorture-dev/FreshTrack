@@ -3,7 +3,7 @@ import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck, 
 import { Link } from 'react-router-dom';
 import { fetchAllBatches } from '../utils/blockchain';
 import { analyzeInventoryWithAI } from '../utils/ai';
-import anime from 'animejs';
+import anime from 'animejs/lib/anime.es.js';
 
 export default function Dashboard() {
   const [batches, setBatches] = useState([]);

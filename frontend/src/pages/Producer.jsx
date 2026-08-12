@@ -3,7 +3,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { registerBatchOnChain } from '../utils/blockchain';
 import { useAuth } from '../context/AuthContext';
 import { PlusCircle } from 'lucide-react';
-import anime from 'animejs';
+import anime from 'animejs/lib/anime.es.js';
 
 const INITIAL_TEMPLATES = [
   { id: 1, name: 'Paltas Hass Premium', image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=300&q=80', defaultOrigin: 'Ica, Perú', defaultExpires: 14 },
