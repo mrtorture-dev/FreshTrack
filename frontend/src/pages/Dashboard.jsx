@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck, Cpu } from 'lucide-react';
+import { Package, AlertTriangle, CheckCircle, Clock, ExternalLink, ShieldCheck, Cpu, LayoutDashboard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchAllBatches } from '../utils/blockchain';
 import { analyzeInventoryWithAI } from '../utils/ai';
