@@ -117,7 +117,11 @@ export const fetchAllBatches = async () => {
       if (!registered) continue;
 
       // getBatch devuelve (productName, producer, expirationDate, weightGrams)
-      const [productName, producer, expirationTimestamp, weightGrams] = await contract.getBatch(id);
+      const [rawProductName, rawProducer, expirationTimestamp, weightGrams] = await contract.getBatch(id);
+
+      // Limpiar basura de memoria de WASM/Stylus (caracteres no imprimibles generados por corrupción de punteros en stylus-sdk 0.9)
+      const productName = rawProductName.replace(/[^\x20-\x7E\xA0-\xFF]/g, '').trim();
+      const producer = rawProducer.replace(/[^\x20-\x7E\xA0-\xFF]/g, '').trim();
 
       const now = Math.floor(Date.now() / 1000);
       const expTs = Number(expirationTimestamp);
