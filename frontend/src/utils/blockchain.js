@@ -1,34 +1,27 @@
 import { ethers } from 'ethers';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// FreshTrack Trace — ABI del nuevo contrato Stylus (Rust/WASM)
-// Contrato con strings on-chain, owner, producer y eventos.
-// NOTA: Actualizar CONTRACT_ADDRESS después del despliegue del nuevo contrato.
-// ─────────────────────────────────────────────────────────────────────────────
+// Nuevo contrato Stylus del mentor — desplegado 2026-08-12
+// Soporta strings on-chain, eventos BatchRegistered, control de acceso owner
+const CONTRACT_ADDRESS = "0xada07a7655c48cfd5859d11dfcf97cba794fa0f9";
 
-// TODO: Reemplazar con la nueva dirección una vez desplegado el nuevo lib.rs
-const CONTRACT_ADDRESS = "0x62fcee2dac606e1b7739d9c864c67472a3a38f27";
-
-// ABI completo del nuevo contrato FreshTrackTrace
 const ABI = [
-  // Inicialización (solo una vez, fija el owner)
+  // Inicialización (solo owner, una sola vez)
   "function init() external",
-
-  // Registro de lote — strings reales on-chain
-  "function register_batch(string product_name, string producer, uint64 expiration_date, uint64 weight_grams) external returns (uint256)",
-
-  // Lectura de lote completo (una sola llamada)
-  "function get_batch(uint256 batch_id) external view returns (string, string, uint64, uint64)",
-
-  // Lecturas individuales
-  "function get_batch_count() external view returns (uint256)",
-  "function get_product_name(uint256 batch_id) external view returns (string)",
-  "function get_producer(uint256 batch_id) external view returns (string)",
-  "function get_expiration(uint256 batch_id) external view returns (uint64)",
-  "function get_weight(uint256 batch_id) external view returns (uint64)",
-  "function is_expired(uint256 batch_id) external view returns (bool)",
-  "function is_registered(uint256 batch_id) external view returns (bool)",
+  // Registro de lotes
+  "function registerBatch(string productName, string producer, uint64 expirationDate, uint64 weightGrams) external returns (uint256)",
+  // Lecturas
+  "function getBatchCount() external view returns (uint256)",
+  "function isRegistered(uint256 batchId) external view returns (bool)",
+  "function getBatch(uint256 batchId) external view returns (string, string, uint64, uint64)",
+  "function getProductName(uint256 batchId) external view returns (string)",
+  "function getProducer(uint256 batchId) external view returns (string)",
+  "function getExpiration(uint256 batchId) external view returns (uint64)",
+  "function getWeight(uint256 batchId) external view returns (uint64)",
+  "function isExpired(uint256 batchId) external view returns (bool)",
   "function owner() external view returns (address)",
+  // Eventos
+  "event BatchRegistered(uint256 indexed batch_id, address indexed registrant, string product_name, string producer, uint64 expiration_date, uint64 weight_grams)",
+  "event Initialized(address indexed owner)"
 ];
 
 const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
@@ -40,97 +33,95 @@ export const getContract = () => {
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
-export const getContractReadOnly = () => {
-  const provider = new ethers.JsonRpcProvider(RPC_URL);
-  return new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
-};
-
-/**
- * Inicializa el contrato (solo necesario una vez después del deploy).
- * Llama a init() para fijar al owner. Falla si ya fue inicializado.
- */
-export const initContract = async () => {
-  const contract = getContract();
-  const tx = await contract.init();
-  await tx.wait();
-  return tx.hash;
-};
-
-/**
- * Registra un lote nuevo en la blockchain.
- * @param {string} productName  - Nombre real del producto (ej: "Paltas Hass")
- * @param {string} producerName - Nombre del productor (ej: "Finca El Sol")
- * @param {number} quantity     - Cantidad en KG (se convierte a gramos internamente)
- * @param {number} expiresInDays - Días hasta vencimiento (se convierte a timestamp Unix)
- * @returns {string} batchId asignado
- */
-export const registerBatchOnChain = async (productName, producerName, quantity, expiresInDays) => {
+export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
   const contract = getContract();
 
-  // Timestamp de expiración = ahora + días en segundos
-  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(Number(expiresInDays) * 86400);
-  // Convertir kg a gramos
-  const weightGrams = BigInt(Math.round(Number(quantity) * 1000));
+  // expiresIn son días → timestamp Unix
+  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expiresIn * 86400);
+  // quantity en gramos
+  const weightGrams = BigInt(quantity * 1000);
 
-  const tx = await contract.register_batch(
-    productName,
-    producerName,
+  const tx = await contract.registerBatch(
+    productType,       // nombre del producto (string real on-chain)
+    creatorName,       // nombre del productor (string real on-chain)
     expirationDate,
     weightGrams
   );
   const receipt = await tx.wait();
 
-  // Leer el nuevo contador para obtener el ID asignado
-  const count = await contract.get_batch_count();
-  return { batchId: count.toString(), txHash: receipt.hash };
+  // Extraer batch_id del evento BatchRegistered
+  let batchId = null;
+  if (receipt && receipt.logs) {
+    for (const log of receipt.logs) {
+      try {
+        const parsed = contract.interface.parseLog(log);
+        if (parsed && parsed.name === "BatchRegistered") {
+          batchId = parsed.args.batch_id.toString();
+          break;
+        }
+      } catch (e) {
+        // log no parseable, continuar
+      }
+    }
+  }
+
+  // Fallback: leer el contador si el evento no se parseó
+  if (!batchId) {
+    const count = await contract.getBatchCount();
+    batchId = count.toString();
+  }
+
+  return batchId;
 };
 
-/**
- * Obtiene todos los lotes registrados en la blockchain.
- * Usa get_batch() para hacer una sola llamada por lote (más eficiente).
- * @returns {Array} array de objetos batch
- */
 export const fetchAllBatches = async () => {
-  const contract = getContractReadOnly();
-  const countRaw = await contract.get_batch_count();
+  const contract = getContract();
+  const countRaw = await contract.getBatchCount();
   const count = Number(countRaw);
 
-  const batches = [];
-  for (let i = 1; i <= count; i++) {
-    const id = BigInt(i);
+  // Obtener eventos BatchRegistered para tener los txHash
+  let txHashes = {};
+  try {
+    const filter = contract.filters.BatchRegistered();
+    const events = await contract.queryFilter(filter, 0, 'latest');
+    events.forEach(e => {
+      const id = Number(e.args.batch_id);
+      txHashes[id] = e.transactionHash;
+    });
+  } catch (e) {
+    console.warn("No se pudieron obtener eventos:", e);
+  }
 
+  let batches = [];
+  for (let i = 1; i <= count; i++) {
     try {
-      // get_batch devuelve: (product_name, producer, expiration_date, weight_grams)
-      const [productName, producer, expirationDate, weightGrams] = await contract.get_batch(id);
+      const id = BigInt(i);
+      const registered = await contract.isRegistered(id);
+      if (!registered) continue;
+
+      // getBatch devuelve (productName, producer, expirationDate, weightGrams)
+      const [productName, producer, expirationTimestamp, weightGrams] = await contract.getBatch(id);
 
       const now = Math.floor(Date.now() / 1000);
-      const expTs = Number(expirationDate);
+      const expTs = Number(expirationTimestamp);
       const daysLeft = Math.max(0, Math.round((expTs - now) / 86400));
-
-      let status = "Almacenado";
-      if (daysLeft <= 0) status = "Caducado";
-      else if (daysLeft <= 3) status = "Crítico";
-      else if (daysLeft <= 7) status = "En Alerta";
 
       batches.push({
         id: i,
         productType: productName,
         type: productName,
-        producer: producer,
-        creatorName: producer,
         quantity: Math.round(Number(weightGrams) / 1000),
-        origin: "Arbitrum Stylus (WASM)",
-        status,
+        origin: "Arbitrum Stylus (Rust/WASM)",
+        status: daysLeft > 7 ? "Registrado" : daysLeft > 0 ? "En Tránsito" : "Entregado",
         expiresRaw: expTs,
         daysLeft,
-        txHash: null,
-        imageUrl: "",
+        txHash: txHashes[i] || null,
+        creatorName: producer,
+        imageUrl: ""
       });
-    } catch (err) {
-      // Si el lote no existe o hay error, lo saltamos
-      console.warn(`Lote #${i} no disponible:`, err);
+    } catch (e) {
+      console.warn(`Error leyendo lote ${i}:`, e);
     }
   }
-
   return batches;
 };
