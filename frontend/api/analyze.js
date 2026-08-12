@@ -12,16 +12,15 @@ export default async function handler(req, res) {
 Eres un experto en logística de supermercados. Estamos evaluando un inventario en tiempo real. 
 Hoy es ${new Date().toLocaleDateString()}.
 Aquí están los productos en el blockchain de Arbitrum:
-${batches.map(b => `- Lote: ${b.id}, Producto: ${b.productType}, Productor: ${b.creatorName}, Faltan: ${b.daysLeft} días`).join('\n')}
+${batches.map(b => `- Lote: ${b.id}, Producto: ${b.type}, Productor: ${b.creatorName}, Faltan: ${b.daysLeft} días`).join('\n')}
 
 Analiza si el producto es altamente perecible y la urgencia basada en el tiempo restante.
 Detecta anomalías (ej. si un producto perecible como Paltas o Tomates tiene demasiados días restantes, o fechas imposibles).
 PROHIBIDO responder con "Datos insuficientes" o similares. DEBES asumir y dar una recomendación.
-Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Las claves deben ser los IDs numéricos y los valores deben ser objetos JSON con este formato exacto:
+Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Usa este formato exacto:
 {
-  "action": "Frase de acción ultra corta (máx 3-4 palabras)",
-  "anomaly": true o false,
-  "reason": "Explicación corta de la anomalía, o vacío si no hay"
+  "1": { "action": "Venta rápida", "anomaly": false, "reason": "" },
+  "2": { "action": "Descartar", "anomaly": true, "reason": "300 días es excesivo para tomates" }
 }
 
   try {
