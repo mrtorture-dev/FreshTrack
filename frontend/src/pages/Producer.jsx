@@ -204,9 +204,9 @@ export default function Producer() {
               <img src="/badges/pionero.jpg" alt="Pionero" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg > 0 ? '2px solid var(--primary-color)' : '2px solid #555', objectFit: 'cover', filter: totalKg > 0 ? 'none' : 'grayscale(100%)' }} />
               <p style={{ fontSize: '0.7rem', margin: '0.5rem 0', color: totalKg > 0 ? 'var(--primary-color)' : 'var(--text-muted)', fontWeight: 'bold' }}>Pionero<br/>(1er Envío)</p>
               {totalKg > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center', marginTop: '0.3rem' }}>
                   <button onClick={() => addNFTToMetaMask(1)} style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: '#f6851b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', width: '100%' }}>🦊 MetaMask</button>
-                  <a href={`https://sepolia.arbiscan.io/token/0x314AC13cb01eEb55205D967dF540Ba59769D0D52?a=${user.address}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', width: '100%', boxSizing: 'border-box' }}>🔍 Verificar</a>
+                  <a href={`https://sepolia.arbiscan.io/token/0x314AC13cb01eEb55205D967dF540Ba59769D0D52?a=${user.address}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', width: '100%', boxSizing: 'border-box' }}>🔍 Verificar</a>
                 </div>
               )}
             </div>
@@ -214,9 +214,9 @@ export default function Producer() {
               <img src="/badges/bronce.jpg" alt="Bronce" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg >= 500 ? '2px solid #cd7f32' : '2px solid #555', objectFit: 'cover', filter: totalKg >= 500 ? 'none' : 'grayscale(100%)' }} />
               <p style={{ fontSize: '0.7rem', margin: '0.5rem 0', color: totalKg >= 500 ? '#cd7f32' : 'var(--text-muted)', fontWeight: 'bold' }}>Bronce<br/>(500kg)</p>
               {totalKg >= 500 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center', marginTop: '0.3rem' }}>
                   <button onClick={() => addNFTToMetaMask(2)} style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: '#f6851b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', width: '100%' }}>🦊 MetaMask</button>
-                  <a href={`https://sepolia.arbiscan.io/token/0x314AC13cb01eEb55205D967dF540Ba59769D0D52?a=${user.address}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', width: '100%', boxSizing: 'border-box' }}>🔍 Verificar</a>
+                  <a href={`https://sepolia.arbiscan.io/token/0x314AC13cb01eEb55205D967dF540Ba59769D0D52?a=${user.address}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', width: '100%', boxSizing: 'border-box' }}>🔍 Verificar</a>
                 </div>
               )}
             </div>
@@ -224,9 +224,9 @@ export default function Producer() {
               <img src="/badges/maestro.jpg" alt="Maestro" style={{ width: '60px', height: '60px', borderRadius: '50%', border: totalKg >= 5000 ? '2px solid #e2e8f0' : '2px solid #555', objectFit: 'cover', filter: totalKg >= 5000 ? 'none' : 'grayscale(100%)' }} />
               <p style={{ fontSize: '0.7rem', margin: '0.5rem 0', color: totalKg >= 5000 ? '#e2e8f0' : 'var(--text-muted)', fontWeight: 'bold' }}>Maestro<br/>(5 Ton)</p>
               {totalKg >= 5000 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'center', marginTop: '0.3rem' }}>
                   <button onClick={() => addNFTToMetaMask(3)} style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: '#f6851b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', width: '100%' }}>🦊 MetaMask</button>
-                  <a href={`https://sepolia.arbiscan.io/token/0x314AC13cb01eEb55205D967dF540Ba59769D0D52?a=${user.address}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', width: '100%', boxSizing: 'border-box' }}>🔍 Verificar</a>
+                  <a href={`https://sepolia.arbiscan.io/token/0x314AC13cb01eEb55205D967dF540Ba59769D0D52?a=${user.address}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block', textAlign: 'center', fontSize: '0.6rem', padding: '0.2rem 0.4rem', background: 'var(--primary-color)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textDecoration: 'none', width: '100%', boxSizing: 'border-box' }}>🔍 Verificar</a>
                 </div>
               )}
             </div>
