@@ -44,13 +44,16 @@ Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Las claves deben 
     }
 
     let aiContent = data.choices[0].message.content.trim();
-    if (aiContent.startsWith('```json')) aiContent = aiContent.replace('```json', '');
-    if (aiContent.startsWith('```')) aiContent = aiContent.replace('```', '');
-    if (aiContent.endsWith('```')) aiContent = aiContent.slice(0, -3);
+    
+    // Extraer solo el bloque JSON por si la IA añade texto antes o después
+    const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      aiContent = jsonMatch[0];
+    }
 
-    return res.status(200).json(JSON.parse(aiContent.trim()));
+    return res.status(200).json(JSON.parse(aiContent));
   } catch (error) {
     console.error("Error consultando a Cerebras AI:", error);
-    return res.status(500).json({ error: 'Failed to process AI request' });
+    return res.status(500).json({ error: 'Failed to process AI request', details: error.message });
   }
 }
