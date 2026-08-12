@@ -62,7 +62,7 @@ export default function Trace() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div className="stat-icon"><Package size={24} /></div>
             <div>
-              <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.875rem' }}>Producto Registrado por <strong>{batch.creatorName || 'Productor'}</strong></p>
+              <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.875rem' }}>Producto Registrado por <strong>{batch.producer || batch.creatorName || 'Productor'}</strong></p>
               <h3 style={{ margin: 0, fontSize: '1.25rem' }}>{batch.type} ({batch.quantity} kg)</h3>
             </div>
           </div>

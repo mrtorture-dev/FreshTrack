@@ -29,22 +29,25 @@ export default function Producer() {
   const [generatedBatchId, setGeneratedBatchId] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
 
+  const [generatedTxHash, setGeneratedTxHash] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsRegistering(true);
     
     try {
-      const batchId = await registerBatchOnChain(
-        formData.productType, 
-        formData.quantity, 
-        formData.expiresIn, 
-        formData.origin,
+      // El nuevo contrato almacena strings reales on-chain.
+      // registerBatchOnChain(productName, producerName, quantityKg, expiresInDays)
+      const result = await registerBatchOnChain(
+        formData.productType,
         user.name,
-        formData.imageUrl
+        formData.quantity,
+        formData.expiresIn
       );
       
-      if (batchId) {
-        setGeneratedBatchId(batchId);
+      if (result?.batchId) {
+        setGeneratedBatchId(result.batchId);
+        setGeneratedTxHash(result.txHash);
       } else {
         alert("Hubo un problema registrando el lote.");
       }
@@ -210,10 +213,21 @@ export default function Producer() {
           {generatedBatchId ? (
             <div className="glass-panel" style={{ textAlign: 'center' }}>
               <h2>¡Lote Registrado con Éxito!</h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
-                Tx Guardada en Arbitrum Sepolia. Imprime este código QR y pégalo en el empaque.
+              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                Strings guardados on-chain en Arbitrum Sepolia. Imprime el QR y pégalo en el empaque.
               </p>
               
+              {generatedTxHash && (
+                <a
+                  href={`https://sepolia.arbiscan.io/tx/${generatedTxHash}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: 'var(--primary-color)', fontSize: '0.8rem', display: 'block', marginBottom: '1.5rem', textDecoration: 'underline' }}
+                >
+                  Ver Tx en Arbiscan ↗
+                </a>
+              )}
+
               <div className="qr-container">
                 <QRCodeSVG 
                   value={`https://freshtrack-ecru.vercel.app/trace/${generatedBatchId}`} 

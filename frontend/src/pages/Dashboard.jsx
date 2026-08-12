@@ -135,7 +135,7 @@ export default function Dashboard() {
                     )}
                     {batch.type}
                   </td>
-                  <td>{batch.creatorName || 'Productor Demo'}</td>
+                  <td>{batch.producer || batch.creatorName || 'Productor Demo'}</td>
                   <td>{batch.origin}</td>
                   <td>{batch.quantity} kg</td>
                   <td>

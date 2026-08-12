@@ -4,72 +4,241 @@
 #[macro_use]
 extern crate alloc;
 
-use alloc::vec::Vec;
+use alloc::string::String;
 
-use stylus_sdk::{alloy_primitives::U256, prelude::*};
+use stylus_sdk::{
+    alloy_primitives::{Address, U256},
+    alloy_sol_types::sol,
+    block, evm, msg,
+    prelude::*,
+};
 
-// FreshTrack Trace Contract - Arbitrum Stylus
-// Stores batch traceability data encoded as uint256 values
-// product_type, origin, etc. are stored as keccak256 hashes (uint256)
+// ─────────────────────────────────────────────────────────────────────────────
+// FreshTrack Trace — Arbitrum Stylus
+//
+// Contrato de trazabilidad de lotes. Guarda, por lote:
+//   - product_name : nombre del producto (string legible on-chain)
+//   - producer     : nombre del productor (string legible on-chain)
+//   - expiration   : fecha de caducidad (timestamp Unix, u64)
+//   - weight_grams : peso en gramos (u64)
+//
+// Optimizaciones frente a la versión con 4 mappings:
+//   - `expiration` y `weight` se EMPAQUETAN en un mismo slot de 32 bytes.
+//   - Se elimina el mapping `registered`: un lote existe si 1 <= id <= count.
+//   - Se emiten eventos para poder indexar off-chain (frontend / timeline).
+//   - Control de acceso (owner) + validación de entrada.
+//
+// Trade-off consciente: guardar strings on-chain cuesta más gas que un hash,
+// pero permite LEER el nombre real del producto y del productor sin depender
+// de una base de datos off-chain. Es lo que pediste.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Eventos: indexables off-chain. `batch_id` y `registrant` van indexed para
+// poder filtrar; los strings viajan como data (un string indexed se guardaría
+// como hash y no serviría para leer).
+sol! {
+    event BatchRegistered(
+        uint256 indexed batch_id,
+        address indexed registrant,
+        string product_name,
+        string producer,
+        uint64 expiration_date,
+        uint64 weight_grams
+    );
+    event Initialized(address indexed owner);
+
+    error NotOwner();
+    error AlreadyInitialized();
+    error NotInitialized();
+    error InvalidProduct();
+    error InvalidProducer();
+    error InvalidWeight();
+    error InvalidExpiration();
+    error BatchNotFound();
+}
+
+#[derive(SolidityError)]
+pub enum TraceError {
+    NotOwner(NotOwner),
+    AlreadyInitialized(AlreadyInitialized),
+    NotInitialized(NotInitialized),
+    InvalidProduct(InvalidProduct),
+    InvalidProducer(InvalidProducer),
+    InvalidWeight(InvalidWeight),
+    InvalidExpiration(InvalidExpiration),
+    BatchNotFound(BatchNotFound),
+}
+
 sol_storage! {
+    // Orden de campos = orden de packing en storage:
+    //   - product_name : string (slot dinámico propio)
+    //   - producer     : string (slot dinámico propio)
+    //   - expiration_date (8 bytes) + weight_grams (8 bytes) -> EMPAQUETADOS
+    //     juntos en un solo slot de 32 bytes.
+    pub struct Batch {
+        string product_name;
+        string producer;
+        uint64 expiration_date;
+        uint64 weight_grams;
+    }
+
     #[entrypoint]
     pub struct FreshTrackTrace {
-        // Total number of registered batches
+        address owner;
         uint256 batch_count;
-        // batch_id => expiration_date (unix timestamp)
-        mapping(uint256 => uint256) expiration_dates;
-        // batch_id => keccak256(productType)
-        mapping(uint256 => uint256) product_hashes;
-        // batch_id => weight in grams
-        mapping(uint256 => uint256) weights;
-        // batch_id => registered (1 = yes)
-        mapping(uint256 => uint256) registered;
+        mapping(uint256 => Batch) batches;
     }
 }
 
 #[public]
 impl FreshTrackTrace {
-    /// Register a new batch. product_hash is keccak256(productType) computed off-chain.
-    pub fn register_batch(
-        &mut self,
-        product_hash: U256,
-        expiration_date: U256,
-        weight_grams: U256,
-    ) -> U256 {
-        let mut count = self.batch_count.get();
-        count += U256::from(1u32);
-        self.batch_count.set(count);
-
-        self.product_hashes.setter(count).set(product_hash);
-        self.expiration_dates.setter(count).set(expiration_date);
-        self.weights.setter(count).set(weight_grams);
-        self.registered.setter(count).set(U256::from(1u32));
-
-        count
+    /// Inicializa el contrato fijando al owner (la fuente de datos de confianza).
+    /// Solo se puede llamar una vez.
+    pub fn init(&mut self) -> Result<(), TraceError> {
+        if self.owner.get() != Address::ZERO {
+            return Err(TraceError::AlreadyInitialized(AlreadyInitialized {}));
+        }
+        let sender = msg::sender();
+        self.owner.set(sender);
+        evm::log(Initialized { owner: sender });
+        Ok(())
     }
 
-    /// Returns the total number of batches registered.
+    /// Registra un lote nuevo. Devuelve el id asignado.
+    pub fn register_batch(
+        &mut self,
+        product_name: String,
+        producer: String,
+        expiration_date: u64,
+        weight_grams: u64,
+    ) -> Result<U256, TraceError> {
+        self.only_owner()?;
+
+        // Validación de entrada.
+        if product_name.is_empty() {
+            return Err(TraceError::InvalidProduct(InvalidProduct {}));
+        }
+        if producer.is_empty() {
+            return Err(TraceError::InvalidProducer(InvalidProducer {}));
+        }
+        if weight_grams == 0 {
+            return Err(TraceError::InvalidWeight(InvalidWeight {}));
+        }
+        if expiration_date <= block::timestamp() {
+            return Err(TraceError::InvalidExpiration(InvalidExpiration {}));
+        }
+
+        // IDs secuenciales: 1, 2, 3, ...
+        let id = self.batch_count.get() + U256::from(1u32);
+        self.batch_count.set(id);
+
+        // Escritura del lote.
+        let mut batch = self.batches.setter(id);
+        batch.product_name.set_str(&product_name);
+        batch.producer.set_str(&producer);
+        batch.expiration_date.set(expiration_date);
+        batch.weight_grams.set(weight_grams);
+
+        evm::log(BatchRegistered {
+            batch_id: id,
+            registrant: msg::sender(),
+            product_name,
+            producer,
+            expiration_date,
+            weight_grams,
+        });
+
+        Ok(id)
+    }
+
+    // ── Lecturas ──────────────────────────────────────────────────────────────
+
+    /// Total de lotes registrados.
     pub fn get_batch_count(&self) -> U256 {
         self.batch_count.get()
     }
 
-    /// Returns the expiration date of a batch (unix timestamp).
-    pub fn get_expiration(&self, batch_id: U256) -> U256 {
-        self.expiration_dates.get(batch_id)
+    /// Un lote existe si 1 <= id <= batch_count (IDs secuenciales).
+    /// No hace falta un mapping `registered`: se deriva del contador.
+    pub fn is_registered(&self, batch_id: U256) -> bool {
+        !batch_id.is_zero() && batch_id <= self.batch_count.get()
     }
 
-    /// Returns the product hash (keccak256 of product name).
-    pub fn get_product_hash(&self, batch_id: U256) -> U256 {
-        self.product_hashes.get(batch_id)
+    /// Lectura completa del registro de un lote en una sola llamada:
+    /// (product_name, producer, expiration_date, weight_grams).
+    pub fn get_batch(
+        &self,
+        batch_id: U256,
+    ) -> Result<(String, String, u64, u64), TraceError> {
+        if !self.is_registered(batch_id) {
+            return Err(TraceError::BatchNotFound(BatchNotFound {}));
+        }
+        let b = self.batches.getter(batch_id);
+        Ok((
+            b.product_name.get_string(),
+            b.producer.get_string(),
+            b.expiration_date.get(),
+            b.weight_grams.get(),
+        ))
     }
 
-    /// Returns the weight in grams.
-    pub fn get_weight(&self, batch_id: U256) -> U256 {
-        self.weights.get(batch_id)
+    /// Nombre del producto de un lote.
+    pub fn get_product_name(&self, batch_id: U256) -> Result<String, TraceError> {
+        if !self.is_registered(batch_id) {
+            return Err(TraceError::BatchNotFound(BatchNotFound {}));
+        }
+        Ok(self.batches.getter(batch_id).product_name.get_string())
     }
 
-    /// Check if a batch is registered (returns 1 if yes, 0 if not).
-    pub fn is_registered(&self, batch_id: U256) -> U256 {
-        self.registered.get(batch_id)
+    /// Nombre del productor de un lote.
+    pub fn get_producer(&self, batch_id: U256) -> Result<String, TraceError> {
+        if !self.is_registered(batch_id) {
+            return Err(TraceError::BatchNotFound(BatchNotFound {}));
+        }
+        Ok(self.batches.getter(batch_id).producer.get_string())
+    }
+
+    /// Fecha de caducidad (timestamp Unix).
+    pub fn get_expiration(&self, batch_id: U256) -> Result<u64, TraceError> {
+        if !self.is_registered(batch_id) {
+            return Err(TraceError::BatchNotFound(BatchNotFound {}));
+        }
+        Ok(self.batches.getter(batch_id).expiration_date.get())
+    }
+
+    /// Peso en gramos.
+    pub fn get_weight(&self, batch_id: U256) -> Result<u64, TraceError> {
+        if !self.is_registered(batch_id) {
+            return Err(TraceError::BatchNotFound(BatchNotFound {}));
+        }
+        Ok(self.batches.getter(batch_id).weight_grams.get())
+    }
+
+    /// True si el lote ya caducó respecto al timestamp del bloque actual.
+    pub fn is_expired(&self, batch_id: U256) -> Result<bool, TraceError> {
+        if !self.is_registered(batch_id) {
+            return Err(TraceError::BatchNotFound(BatchNotFound {}));
+        }
+        let exp = self.batches.getter(batch_id).expiration_date.get();
+        Ok(exp <= block::timestamp())
+    }
+
+    /// Dirección del owner.
+    pub fn owner(&self) -> Address {
+        self.owner.get()
+    }
+}
+
+// Helpers internos (no forman parte del ABI público).
+impl FreshTrackTrace {
+    fn only_owner(&self) -> Result<(), TraceError> {
+        let owner = self.owner.get();
+        if owner == Address::ZERO {
+            return Err(TraceError::NotInitialized(NotInitialized {}));
+        }
+        if msg::sender() != owner {
+            return Err(TraceError::NotOwner(NotOwner {}));
+        }
+        Ok(())
     }
 }

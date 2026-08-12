@@ -1,16 +1,34 @@
 import { ethers } from 'ethers';
 
-const CONTRACT_ADDRESS = "0x62fcee2dac606e1b7739d9c864c67472a3a38f27"; // Arbitrum Stylus (Rust) - Deployed 2026-08-08
+// ─────────────────────────────────────────────────────────────────────────────
+// FreshTrack Trace — ABI del nuevo contrato Stylus (Rust/WASM)
+// Contrato con strings on-chain, owner, producer y eventos.
+// NOTA: Actualizar CONTRACT_ADDRESS después del despliegue del nuevo contrato.
+// ─────────────────────────────────────────────────────────────────────────────
 
-// ABI del contrato Stylus (Rust/WASM) desplegado en Arbitrum Sepolia
-// Funciones adaptadas: strings → hashes uint256 para compatibilidad con WASM
+// TODO: Reemplazar con la nueva dirección una vez desplegado el nuevo lib.rs
+const CONTRACT_ADDRESS = "0x62fcee2dac606e1b7739d9c864c67472a3a38f27";
+
+// ABI completo del nuevo contrato FreshTrackTrace
 const ABI = [
-  "function registerBatch(uint256 productHash, uint256 expirationDate, uint256 weightGrams) external returns (uint256)",
-  "function getBatchCount() external view returns (uint256)",
-  "function getExpiration(uint256 batchId) external view returns (uint256)",
-  "function getProductHash(uint256 batchId) external view returns (uint256)",
-  "function getWeight(uint256 batchId) external view returns (uint256)",
-  "function isRegistered(uint256 batchId) external view returns (uint256)"
+  // Inicialización (solo una vez, fija el owner)
+  "function init() external",
+
+  // Registro de lote — strings reales on-chain
+  "function register_batch(string product_name, string producer, uint64 expiration_date, uint64 weight_grams) external returns (uint256)",
+
+  // Lectura de lote completo (una sola llamada)
+  "function get_batch(uint256 batch_id) external view returns (string, string, uint64, uint64)",
+
+  // Lecturas individuales
+  "function get_batch_count() external view returns (uint256)",
+  "function get_product_name(uint256 batch_id) external view returns (string)",
+  "function get_producer(uint256 batch_id) external view returns (string)",
+  "function get_expiration(uint256 batch_id) external view returns (uint64)",
+  "function get_weight(uint256 batch_id) external view returns (uint64)",
+  "function is_expired(uint256 batch_id) external view returns (bool)",
+  "function is_registered(uint256 batch_id) external view returns (bool)",
+  "function owner() external view returns (address)",
 ];
 
 const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
@@ -22,83 +40,97 @@ export const getContract = () => {
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
-// Convierte un string de hasta 31 caracteres a uint256 (rellenando con ceros) de forma reversible
-const stringToBytes32Int = (str) => {
-  // Limitar a 31 caracteres para asegurar que no se pase de 32 bytes
-  const slicedStr = str.slice(0, 31);
-  const bytes = ethers.toUtf8Bytes(slicedStr);
-  const paddedBytes = ethers.zeroPadValue(bytes, 32);
-  return BigInt(paddedBytes);
+export const getContractReadOnly = () => {
+  const provider = new ethers.JsonRpcProvider(RPC_URL);
+  return new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
 };
 
-// Convierte un entero uint256 de vuelta a un string UTF-8
-const bytes32IntToString = (valueBigInt) => {
-  try {
-    let hex = valueBigInt.toString(16);
-    // Rellenar hasta 64 caracteres hex (32 bytes)
-    hex = "0x" + hex.padStart(64, '0');
-    const bytes = ethers.getBytes(hex);
-    // Decodificar y quitar bytes nulos
-    return ethers.toUtf8String(bytes).replace(/\0/g, '');
-  } catch (e) {
-    return "Lote Desconocido";
-  }
-};
-
-export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
+/**
+ * Inicializa el contrato (solo necesario una vez después del deploy).
+ * Llama a init() para fijar al owner. Falla si ya fue inicializado.
+ */
+export const initContract = async () => {
   const contract = getContract();
-
-  // Guardamos directamente el productType como entero reversible (hasta 31 letras)
-  const productHash = stringToBytes32Int(productType);
-  // expiresIn son días, lo convertimos a timestamp unix futuro
-  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expiresIn * 86400);
-  // quantity en gramos (multiplicamos kg por 1000)
-  const weightGrams = BigInt(quantity * 1000);
-
-  const tx = await contract.registerBatch(productHash, expirationDate, weightGrams);
+  const tx = await contract.init();
   await tx.wait();
-
-  // El contrato Stylus no emite eventos, leemos el contador directamente
-  const count = await contract.getBatchCount();
-  return count.toString();
+  return tx.hash;
 };
 
-export const fetchAllBatches = async () => {
+/**
+ * Registra un lote nuevo en la blockchain.
+ * @param {string} productName  - Nombre real del producto (ej: "Paltas Hass")
+ * @param {string} producerName - Nombre del productor (ej: "Finca El Sol")
+ * @param {number} quantity     - Cantidad en KG (se convierte a gramos internamente)
+ * @param {number} expiresInDays - Días hasta vencimiento (se convierte a timestamp Unix)
+ * @returns {string} batchId asignado
+ */
+export const registerBatchOnChain = async (productName, producerName, quantity, expiresInDays) => {
   const contract = getContract();
-  const countRaw = await contract.getBatchCount();
+
+  // Timestamp de expiración = ahora + días en segundos
+  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(Number(expiresInDays) * 86400);
+  // Convertir kg a gramos
+  const weightGrams = BigInt(Math.round(Number(quantity) * 1000));
+
+  const tx = await contract.register_batch(
+    productName,
+    producerName,
+    expirationDate,
+    weightGrams
+  );
+  const receipt = await tx.wait();
+
+  // Leer el nuevo contador para obtener el ID asignado
+  const count = await contract.get_batch_count();
+  return { batchId: count.toString(), txHash: receipt.hash };
+};
+
+/**
+ * Obtiene todos los lotes registrados en la blockchain.
+ * Usa get_batch() para hacer una sola llamada por lote (más eficiente).
+ * @returns {Array} array de objetos batch
+ */
+export const fetchAllBatches = async () => {
+  const contract = getContractReadOnly();
+  const countRaw = await contract.get_batch_count();
   const count = Number(countRaw);
 
-  let batches = [];
+  const batches = [];
   for (let i = 1; i <= count; i++) {
     const id = BigInt(i);
-    const isReg = await contract.isRegistered(id);
-    if (Number(isReg) === 0) continue;
 
-    const expirationTimestamp = await contract.getExpiration(id);
-    const weightGrams = await contract.getWeight(id);
-    const productHash = await contract.getProductHash(id);
+    try {
+      // get_batch devuelve: (product_name, producer, expiration_date, weight_grams)
+      const [productName, producer, expirationDate, weightGrams] = await contract.get_batch(id);
 
-    const now = Math.floor(Date.now() / 1000);
-    const expTs = Number(expirationTimestamp);
-    const daysLeft = Math.max(0, Math.round((expTs - now) / 86400));
-    
-    // Decodificamos el nombre original del producto guardado en la blockchain
-    const originalProductName = bytes32IntToString(productHash);
+      const now = Math.floor(Date.now() / 1000);
+      const expTs = Number(expirationDate);
+      const daysLeft = Math.max(0, Math.round((expTs - now) / 86400));
 
-    batches.push({
-      id: i,
-      productType: originalProductName,
-      type: originalProductName,
-      quantity: Math.round(Number(weightGrams) / 1000),
-      origin: "Arbitrum Stylus (WASM)",
-      status: daysLeft > 7 ? "Registrado" : daysLeft > 0 ? "En Tránsito" : "Entregado",
-      expiresRaw: expTs,
-      daysLeft,
-      txHash: null,
-      creatorName: "Productor FreshTrack",
-      imageUrl: ""
-    });
+      let status = "Almacenado";
+      if (daysLeft <= 0) status = "Caducado";
+      else if (daysLeft <= 3) status = "Crítico";
+      else if (daysLeft <= 7) status = "En Alerta";
+
+      batches.push({
+        id: i,
+        productType: productName,
+        type: productName,
+        producer: producer,
+        creatorName: producer,
+        quantity: Math.round(Number(weightGrams) / 1000),
+        origin: "Arbitrum Stylus (WASM)",
+        status,
+        expiresRaw: expTs,
+        daysLeft,
+        txHash: null,
+        imageUrl: "",
+      });
+    } catch (err) {
+      // Si el lote no existe o hay error, lo saltamos
+      console.warn(`Lote #${i} no disponible:`, err);
+    }
   }
+
   return batches;
 };
-
