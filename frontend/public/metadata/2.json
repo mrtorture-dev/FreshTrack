@@ -1,0 +1,15 @@
+{
+  "name": "FreshTrack Bronce",
+  "description": "Otorgado al productor por alcanzar el hito de 500kg de productos agrícolas verificados en la blockchain.",
+  "image": "https://freshtrack-ecru.vercel.app/badges/bronce.jpg",
+  "attributes": [
+    {
+      "trait_type": "Logro",
+      "value": "500 Kilos"
+    },
+    {
+      "trait_type": "Rango",
+      "value": "Bronce"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Maestro Agroexportador",
+  "description": "El rango más alto otorgado al productor por alcanzar el hito épico de 5 Toneladas verificadas en FreshTrack.",
+  "image": "https://freshtrack-ecru.vercel.app/badges/maestro.jpg",
+  "attributes": [
+    {
+      "trait_type": "Logro",
+      "value": "5 Toneladas"
+    },
+    {
+      "trait_type": "Rango",
+      "value": "Maestro"
+    }
+  ]
+}

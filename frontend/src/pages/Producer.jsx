@@ -89,9 +89,9 @@ export default function Producer() {
     try {
       // Determinar URI del NFT basado en milestoneId
       const uris = {
-        1: "https://freshtrack-ecru.vercel.app/badges/pionero.jpg",
-        2: "https://freshtrack-ecru.vercel.app/badges/bronce.jpg",
-        3: "https://freshtrack-ecru.vercel.app/badges/maestro.jpg"
+        1: "https://freshtrack-ecru.vercel.app/metadata/1.json",
+        2: "https://freshtrack-ecru.vercel.app/metadata/2.json",
+        3: "https://freshtrack-ecru.vercel.app/metadata/3.json"
       };
       
       alert("Acuñando (Minting) NFT en Arbitrum Sepolia... Por favor espera unos segundos.");

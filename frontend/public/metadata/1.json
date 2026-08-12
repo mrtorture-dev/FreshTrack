@@ -1,0 +1,15 @@
+{
+  "name": "FreshTrack Pionero",
+  "description": "Otorgado al productor por completar exitosamente su primer envío verificado en la blockchain.",
+  "image": "https://freshtrack-ecru.vercel.app/badges/pionero.jpg",
+  "attributes": [
+    {
+      "trait_type": "Logro",
+      "value": "Primer Envío"
+    },
+    {
+      "trait_type": "Kilos",
+      "value": "> 0"
+    }
+  ]
+}
