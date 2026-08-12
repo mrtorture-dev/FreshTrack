@@ -37,14 +37,14 @@ export const getReadOnlyContract = () => {
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
 };
 
-export const getSignerContract = async () => {
+export const getSignerContract = () => {
   const provider = new ethers.JsonRpcProvider(RPC_URL);
   const signer = new ethers.Wallet(PRIVATE_KEY, provider);
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
 export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
-  const contract = await getSignerContract();
+  const contract = getSignerContract();
 
   // Parseamos los inputs numéricos (vienen como strings del form)
   const expDays = Number(expiresIn) || 0;
@@ -55,12 +55,18 @@ export const registerBatchOnChain = async (productType, quantity, expiresIn, ori
   // quantity en gramos
   const weightGrams = BigInt(Math.floor(weightNum * 1000));
 
+  console.log("Enviando TX a Stylus con datos:", { productType, creatorName, expirationDate, weightGrams });
+  
   const tx = await contract.registerBatch(
-    productType,       // nombre del producto (string real on-chain)
-    creatorName,       // nombre del productor (string real on-chain)
+    productType || "Producto Sin Nombre",
+    creatorName || "Productor Desconocido",
     expirationDate,
-    weightGrams
+    weightGrams,
+    {
+      gasLimit: 3000000 // Saltamos la estimación de gas automática para evitar fallos del RPC
+    }
   );
+  console.log("Tx hash:", tx.hash);
   const receipt = await tx.wait();
 
   // Extraer batch_id del evento BatchRegistered
