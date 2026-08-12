@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Link, Navigate } from 'react-router-dom';
 import { LayoutDashboard, Truck, LogOut, Users } from 'lucide-react';
 import './App.css';
 import Dashboard from './pages/Dashboard';
