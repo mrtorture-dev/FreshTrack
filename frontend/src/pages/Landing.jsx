@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, TrendingUp, Package, Truck, ArrowRight } from 'lucide-react';
+import { ShieldCheck, TrendingUp, Users, Truck, ArrowRight } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 
 export default function Landing() {
@@ -76,7 +76,7 @@ export default function Landing() {
       <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '3rem', position: 'relative', zIndex: 1 }}>
         <div className="glass-panel" style={{ textAlign: 'center', padding: '2rem' }}>
           <div ref={icon1Ref} style={{ display: 'inline-block' }}>
-            <Package size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
+            <Users size={48} color="var(--success-color)" style={{ marginBottom: '1rem' }} />
           </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Proveedores Conectados</h3>
           <p style={{ color: 'var(--text-muted)' }}>
@@ -100,7 +100,7 @@ export default function Landing() {
           </div>
           <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Reducción de Mermas (IA)</h3>
           <p style={{ color: 'var(--text-muted)' }}>
-            El sistema FEFO (First-Expired, First-Out) del supermercado se potencia analizando la vida útil restante con la inferencia ultrarrápida de Llama 3.1 en Cerebras AI, automatizando alertas de venta rápida.
+            El sistema FEFO (First-Expired, First-Out) del supermercado se potencia analizando la vida útil restante con la inferencia ultrarrápida de Gemma 4 31B en Cerebras AI, automatizando alertas de venta rápida.
           </p>
         </div>
       </div>
