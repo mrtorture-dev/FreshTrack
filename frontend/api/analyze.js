@@ -22,7 +22,7 @@ Responde ÚNICAMENTE con un JSON válido, sin texto adicional. Usa este formato 
   "1": { "action": "Venta rápida", "anomaly": false, "reason": "" },
   "2": { "action": "Descartar", "anomaly": true, "reason": "300 días es excesivo para tomates" }
 }
-\`;
+`;
 
   try {
     const response = await fetch('https://api.cerebras.ai/v1/chat/completions', {
