@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { ethers } from 'ethers';
 
 const AuthContext = createContext();
 
@@ -33,6 +34,18 @@ export const AuthProvider = ({ children }) => {
   const login = (username, password) => {
     const found = allUsers.find(u => u.username === username && u.password === password);
     if (found) {
+      // If user doesn't have a wallet, generate one
+      if (!found.privateKey) {
+        const wallet = ethers.Wallet.createRandom();
+        found.privateKey = wallet.privateKey;
+        found.address = wallet.address;
+        
+        // Save the updated user to local storage
+        const updatedUsers = allUsers.map(u => u.id === found.id ? found : u);
+        setAllUsers(updatedUsers);
+        localStorage.setItem('freshtrack_db', encryptData(updatedUsers));
+      }
+      
       setUser(found);
       return true;
     }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { registerBatchOnChain } from '../utils/blockchain';
 import { useAuth } from '../context/AuthContext';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Wallet, Key, Award, Copy } from 'lucide-react';
 import { animate, stagger } from 'animejs';
 
 const INITIAL_TEMPLATES = [
@@ -26,6 +26,7 @@ export default function Producer() {
     imageUrl: INITIAL_TEMPLATES[0].image
   });
   
+  const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [generatedBatchId, setGeneratedBatchId] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
 
@@ -93,10 +94,61 @@ export default function Producer() {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <header style={{ marginBottom: '2rem' }}>
-        <h1 style={{ color: 'var(--text-main)' }}>Panel de Productor</h1>
-        <p style={{ color: 'var(--text-muted)' }}>Registra nuevos lotes de productos en la blockchain para trazabilidad inmutable.</p>
+      <header style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1 style={{ color: 'var(--text-main)' }}>Panel de Productor</h1>
+          <p style={{ color: 'var(--text-muted)' }}>Registra nuevos lotes de productos en la blockchain para trazabilidad inmutable.</p>
+        </div>
       </header>
+
+      {/* WALLET & KMS SECTION */}
+      <div className="glass-panel" style={{ marginBottom: '2rem', padding: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
+        <div style={{ flex: '1 1 300px' }}>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>
+            <Wallet size={20} color="var(--primary-color)"/> Tu Wallet Web3
+          </h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>Billetera asignada automáticamente (KMS):</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(0,0,0,0.3)', padding: '0.5rem 1rem', borderRadius: '8px', fontFamily: 'monospace', color: '#a855f7', marginBottom: '1rem' }}>
+            {user.address || '0x...'} 
+            <Copy size={14} style={{ cursor: 'pointer' }} onClick={() => navigator.clipboard.writeText(user.address)} />
+          </div>
+          <button 
+            onClick={() => setShowPrivateKey(!showPrivateKey)}
+            style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: 'var(--text-main)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}
+          >
+            <Key size={14} /> Exportar a MetaMask
+          </button>
+          
+          {showPrivateKey && (
+            <div style={{ marginTop: '1rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--danger-color)', padding: '1rem', borderRadius: '8px' }}>
+              <p style={{ color: 'var(--danger-color)', fontSize: '0.8rem', fontWeight: 'bold', margin: '0 0 0.5rem 0' }}>⚠️ NUNCA COMPARTAS TU CLAVE PRIVADA:</p>
+              <div style={{ wordBreak: 'break-all', fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--text-main)' }}>
+                {user.privateKey}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ flex: '1 1 300px' }}>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: 'var(--text-main)' }}>
+            <Award size={20} color="#f59e0b"/> Tus Logros (NFTs)
+          </h3>
+          <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+            <div style={{ textAlign: 'center', minWidth: '80px' }}>
+              <img src="/badges/pionero.jpg" alt="Pionero" style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid var(--primary-color)', objectFit: 'cover' }} />
+              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: 'var(--primary-color)', fontWeight: 'bold' }}>Pionero<br/>(1er Envío)</p>
+            </div>
+            <div style={{ textAlign: 'center', minWidth: '80px' }}>
+              <img src="/badges/bronce.jpg" alt="Bronce" style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid #cd7f32', objectFit: 'cover' }} />
+              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: '#cd7f32', fontWeight: 'bold' }}>Bronce<br/>(500kg)</p>
+            </div>
+            <div style={{ textAlign: 'center', minWidth: '80px', opacity: 0.3 }}>
+              <img src="/badges/maestro.jpg" alt="Maestro" style={{ width: '60px', height: '60px', borderRadius: '50%', border: '2px solid #94a3b8', objectFit: 'cover', filter: 'grayscale(100%)' }} />
+              <p style={{ fontSize: '0.7rem', marginTop: '0.5rem', color: 'var(--text-muted)' }}>Maestro<br/>(5 Ton)</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="glass-panel" style={{ marginBottom: '2rem', overflow: 'hidden' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
