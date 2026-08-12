@@ -8,6 +8,7 @@ alloy-primitives = "=0.8.20"
 alloy-sol-types = "=0.8.20"
 stylus-sdk = "0.9.0"
 hex = { version = "0.4", default-features = false }
+ruint = "=1.12.3"
 
 [features]
 export-abi = ["stylus-sdk/export-abi"]
@@ -18,8 +19,3 @@ crate-type = ["lib", "cdylib"]
 [[bin]]
 name = "freshtrack-stylus"
 path = "src/main.rs"
-
-# Fijamos ruint a 1.12.3 para evitar el bug de evaluación de constantes
-# en ruint >= 1.13 cuando se usa Uint<8,1> (address/u8) en storage traits
-[patch.crates-io]
-ruint = { version = "=1.12.3", package = "ruint" }
