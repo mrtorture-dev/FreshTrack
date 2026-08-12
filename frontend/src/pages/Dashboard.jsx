@@ -74,7 +74,7 @@ export default function Dashboard() {
   return (
     <div>
       <header style={{ marginBottom: '2rem' }}>
-        <h1>Panel del Supermercado</h1>
+        <h1 style={{ color: 'var(--text-main)', margin: '0 0 0.5rem 0' }}>Panel del Supermercado</h1>
         <p style={{ color: 'var(--text-muted)' }}>Control de inventario en tiempo real con sistema FEFO (First-Expired, First-Out).</p>
       </header>
 
@@ -112,7 +112,10 @@ export default function Dashboard() {
 
       <div className="glass-panel" style={{ marginTop: '2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <h2 style={{ margin: 0 }}>Inventario Inteligente (Ordenado por FEFO)</h2>
+          <h2 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)' }}>
+            <LayoutDashboard />
+            Inventario Inteligente (Ordenado por FEFO)
+          </h2>
           <button 
             onClick={handleAnalyze} 
             disabled={isAnalyzing || batches.length === 0}
