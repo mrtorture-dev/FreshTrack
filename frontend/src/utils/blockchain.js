@@ -88,7 +88,7 @@ export const registerBatchOnChain = async (productType, quantity, expiresIn, ori
     batchId = count.toString();
   }
 
-  return batchId;
+  return { batchId, txHash: receipt.hash || tx.hash };
 };
 
 export const fetchAllBatches = async () => {
