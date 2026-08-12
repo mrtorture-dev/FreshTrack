@@ -36,10 +36,14 @@ export const getContract = () => {
 export const registerBatchOnChain = async (productType, quantity, expiresIn, origin, creatorName, imageUrl) => {
   const contract = getContract();
 
+  // Parseamos los inputs numéricos (vienen como strings del form)
+  const expDays = Number(expiresIn) || 0;
+  const weightNum = Number(quantity) || 0;
+
   // expiresIn son días → timestamp Unix
-  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expiresIn * 86400);
+  const expirationDate = BigInt(Math.floor(Date.now() / 1000)) + BigInt(expDays * 86400);
   // quantity en gramos
-  const weightGrams = BigInt(quantity * 1000);
+  const weightGrams = BigInt(Math.floor(weightNum * 1000));
 
   const tx = await contract.registerBatch(
     productType,       // nombre del producto (string real on-chain)
