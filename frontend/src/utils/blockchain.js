@@ -26,11 +26,8 @@ const ABI = [
 
 const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
 // Billetera KMS asignada por defecto al usuario para la demo
-let rawKey = import.meta.env.VITE_PRIVATE_KEY || "7f1102cc95d7e318dc29a6fa956e258d309440c070036d2300cbd518e154506c";
-if (!rawKey.startsWith("0x")) {
-  rawKey = "0x" + rawKey;
-}
-const PRIVATE_KEY = rawKey;
+// Forzamos esta llave que es la que se usó para inicializar (owner)
+const PRIVATE_KEY = "0x7f1102cc95d7e318dc29a6fa956e258d309440c070036d2300cbd518e154506c";
 
 export const getReadOnlyContract = () => {
   const provider = new ethers.JsonRpcProvider(RPC_URL);
