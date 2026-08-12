@@ -25,7 +25,8 @@ const ABI = [
 ];
 
 const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
-const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY;
+// Billetera KMS asignada por defecto al usuario para la demo
+const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY || "7f1102cc95d7e318dc29a6fa956e258d309440c070036d2300cbd518e154506c";
 
 export const getReadOnlyContract = () => {
   const provider = new ethers.JsonRpcProvider(RPC_URL);
@@ -33,12 +34,8 @@ export const getReadOnlyContract = () => {
 };
 
 export const getSignerContract = async () => {
-  if (!window.ethereum) {
-    throw new Error("MetaMask (u otra wallet Web3) no está instalada");
-  }
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const signer = await provider.getSigner();
+  const provider = new ethers.JsonRpcProvider(RPC_URL);
+  const signer = new ethers.Wallet(PRIVATE_KEY, provider);
   return new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 };
 
